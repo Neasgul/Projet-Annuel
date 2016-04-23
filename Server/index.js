@@ -7,6 +7,11 @@ app.use(bodyParser.urlencoded({
     "extended": false
 }));
 
+app.use(function (req,res,next) {
+    console.log(req.path);
+    next();
+})
+
 require('./Command')(app);
 
 app.listen(8888, function () {
