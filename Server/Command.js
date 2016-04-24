@@ -11,7 +11,7 @@ var logger = new winston.Logger({
         new winston.transports.File({
             level: 'info',
             filename: './Command.log',
-            handleExceptions: true,
+            handleExceptions: false,
             json: true,
             colorize: false
         })
@@ -54,7 +54,15 @@ module.exports = function (app) {
     });
 
     app.get('/CommandLog',function (req,res) {
-        res.json();
+        fs.readFile(filePath,function (err, data) {
+            if(err){
+                throw err
+            }
+            var format = data.toString().split("}\r\n").join("},");
+            res.json(format.substring(0,format.length-1))
+        })
+
+
     });
 
 
