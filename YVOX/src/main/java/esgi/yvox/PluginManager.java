@@ -44,7 +44,6 @@ public class PluginManager {
             mPluginList.add(newPlugin);
         }
     }
-
     private  JSONObject getPluginJSON() {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource(fileName).getFile());
