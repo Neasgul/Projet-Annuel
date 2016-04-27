@@ -20,7 +20,7 @@ LogType.prototype.addLogResearch = function (res) {
     return "### RESEARCH ### The user has research in the browser " + res;
 };
 LogType.prototype.addLog = function (type, info, res) {
-    return "### "+ type +" ### "+info+ res;
+    return "### "+ type +" ### "+ info + res;
 };
 
 module.exports = LogType;

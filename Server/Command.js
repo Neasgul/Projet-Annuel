@@ -19,6 +19,10 @@ var logger = new winston.Logger({
     exitOnError: false
 });
 
+String.prototype.replaceAll = function (search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+}
 
 
 module.exports = function (app) {
@@ -56,14 +60,10 @@ module.exports = function (app) {
     app.get('/CommandLog',function (req,res) {
         fs.readFile(filePath,function (err, data) {
             if(err){
-                throw err
+                throw err;
             }
-            var format = data.toString().split("}\r\n").join("},");
-            res.json(format.substring(0,format.length-1))
+            var format = data.toString().replaceAll("}\r\n", "},").replaceAll('\"', '');
+            res.json("[" + format.substring(0,format.length-1) + "]");
         })
-
-
     });
-
-
 };
