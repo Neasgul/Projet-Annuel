@@ -43,7 +43,7 @@ public class Main extends Application{
         StackPane sp = new StackPane();
         Image imgmic = new Image("file:img/mic.png");
         ImageView imgview = new ImageView(imgmic);
-        //imgview.addEventHandler(MouseEvent.MOUSE_PRESSED,img_click);
+        imgview.addEventHandler(MouseEvent.MOUSE_PRESSED,img_click);
         sp.getChildren().add(imgview);
         Scene scene = new Scene(sp,imgmic.getWidth(),imgmic.getHeight());
         stage.setScene(scene);
