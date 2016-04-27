@@ -46,10 +46,10 @@ public class PluginManager {
     }
     private  JSONObject getPluginJSON() {
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(fileName).getFile());
         JSONObject jsonObject = null;
         JSONParser jsonParser = new JSONParser();
         try {
+            File file = new File(classLoader.getResource(fileName).getFile());
             FileReader fileReader = new FileReader(file);
             jsonObject = (JSONObject) jsonParser.parse(fileReader);
             System.out.println(jsonObject.toJSONString());
@@ -59,6 +59,8 @@ public class PluginManager {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e){
             e.printStackTrace();
         }
         finally {
