@@ -22,12 +22,12 @@ import java.io.IOException;
  */
 public class Main extends Application{
 
+    private Controller controller;
     private Configuration mConfiguration;
     private PluginManager mPluginManager;
     private LiveSpeechRecognizer lmRecognizer;
 
     boolean recognitionState;
-
 
     public static void main(String[] args) {
         launch(args);
@@ -35,8 +35,8 @@ public class Main extends Application{
 
     @Override
     public void start(Stage stage) throws Exception {
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("main_scene.fxml"));
-        //Parent main_sc = loader.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("main_scene.fxml"));
+        Parent main_sc = loader.load();
         stage.setTitle("YVOX Voice Controller");
         stage.getIcons().add(new Image("file:img/logo_icone.png"));
 
@@ -44,13 +44,7 @@ public class Main extends Application{
         stage.setWidth(mainscreen.getWidth() * 0.5);
         stage.setHeight(mainscreen.getHeight() * 0.75);
 
-        StackPane sp = new StackPane();
-        Image imgmic = new Image("file:img/mic.png");
-        ImageView imgview = new ImageView(imgmic);
-        imgview.addEventHandler(MouseEvent.MOUSE_PRESSED,img_click);
-        sp.getChildren().add(imgview);
-        Scene scene = new Scene(sp,stage.getWidth(),stage.getHeight());
-        //Scene scene = new Scene(main_sc,stage.getWidth(),stage.getHeight());
+        Scene scene = new Scene(main_sc,stage.getWidth(),stage.getHeight());
         stage.setScene(scene);
         stage.show();
         sphinxConfiguration();
@@ -90,7 +84,6 @@ public class Main extends Application{
         lmRecognizer.stopRecognition();
     }
 
-
     EventHandler<MouseEvent> img_click = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
@@ -103,5 +96,4 @@ public class Main extends Application{
             }
         }
     };
-
 }
