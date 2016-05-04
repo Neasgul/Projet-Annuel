@@ -1,4 +1,4 @@
-package org.esgi.yvox;
+package esgi.yvox;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

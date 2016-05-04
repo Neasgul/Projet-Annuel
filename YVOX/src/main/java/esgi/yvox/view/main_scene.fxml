@@ -8,9 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.esgi.yvox.controller.MainScene_Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esgi.yvox.controller.MainScene_Controller">
    <left>
-      <Button alignment="BASELINE_RIGHT" mnemonicParsing="false" onAction="#onHistoriqueClick" prefHeight="150.0" prefWidth="120.0" style="-fx-background-color: #ff8c00; -fx-background-radius: 5em;" text="Historique" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+      <Button fx:id="button_historic" alignment="BASELINE_RIGHT" mnemonicParsing="false" onAction="#onHistoriqueClick" prefHeight="150.0" prefWidth="120.0" style="-fx-background-color: #ff8c00; -fx-background-radius: 5em;" text="Historique" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets left="-50.0" />
          </BorderPane.margin>
@@ -32,13 +32,13 @@
    <center>
       <ImageView fx:id="mic" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#onMicClick" onMousePressed="#onMicClick" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
-            <Image url="@../../../../../../../img/mic.png" />
+            <Image url="@../../../../../../img/mic.png" />
          </image></ImageView>
    </center>
    <top>
-      <ImageView fx:id="img_top_logo" fitHeight="124.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+      <ImageView fx:id="img_top_logo" fitHeight="94.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
-            <Image url="@../../../../../../../img/logo_icone.png" />
+            <Image url="@../../../../../../img/logo_icone.png" />
          </image></ImageView>
    </top>
 </BorderPane>

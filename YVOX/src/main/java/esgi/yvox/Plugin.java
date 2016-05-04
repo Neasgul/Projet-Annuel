@@ -1,4 +1,4 @@
-package org.esgi.yvox;
+package esgi.yvox;
 
 /**
  * Created by Benoit on 05/04/2016.

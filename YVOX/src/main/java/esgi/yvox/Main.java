@@ -1,7 +1,8 @@
-package org.esgi.yvox;
+package esgi.yvox;
 
 import edu.cmu.sphinx.api.Configuration;
 import edu.cmu.sphinx.api.LiveSpeechRecognizer;
+import esgi.yvox.controller.MainScene_Controller;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import org.esgi.yvox.controller.MainScene_Controller;
 
 import java.io.IOException;
 

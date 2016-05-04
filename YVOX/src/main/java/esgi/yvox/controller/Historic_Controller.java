@@ -1,4 +1,4 @@
-package esgi.yvox;
+package esgi.yvox.controller;
 
 import javafx.fxml.FXML;
 /**
