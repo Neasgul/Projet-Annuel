@@ -1,13 +1,10 @@
-package esgi.yvox;
+package org.esgi.yvox;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import sun.misc.IOUtils;
 
 import java.io.*;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
