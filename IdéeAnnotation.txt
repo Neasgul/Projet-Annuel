@@ -2,3 +2,4 @@ Annotation :
     - Version (Build)
     - Creation repertoire plugins (execution)
     - Generation Doc (Build)
+    - Validation plugins (Runtime)
