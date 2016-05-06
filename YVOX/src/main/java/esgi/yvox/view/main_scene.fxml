@@ -30,7 +30,7 @@
       </Button>
    </right>
    <center>
-      <ImageView fx:id="mic" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#onMicClick" onMousePressed="#onMicClick" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+      <ImageView fx:id="mic" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
             <Image url="@../../../../../../img/mic.png" />
          </image></ImageView>

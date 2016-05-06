@@ -1,6 +1,9 @@
 package esgi.yvox.controller;
 
+import esgi.yvox.Sphinx_Controller;
+import esgi.yvox.Sphinx_Request;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +20,12 @@ import java.util.ResourceBundle;
  * Created by Teddy on 29/04/2016.
  */
 public class MainScene_Controller {
+    Sphinx_Request sphinx_request = new Sphinx_Request() {
+        @Override
+        public void onRecognitionRequest() {
+            Sphinx_Controller.getInstance().onRecognitionRequest();
+        }
+    };
 
     @FXML
     private ResourceBundle resources;
@@ -33,11 +42,7 @@ public class MainScene_Controller {
     @FXML
     private Button button_historic;
 
-    @FXML
-    void onMicClick(ActionEvent event) {
-        System.out.println("Start / stop vocale recognition");
-        // TODO: 04/05/2016 implement it
-    }
+
 
     @FXML
     void onHistoriqueClick(ActionEvent event) {
@@ -57,8 +62,8 @@ public class MainScene_Controller {
     }
 
     @FXML
-    void onPluginClick(ActionEvent event) {
-        System.out.println("Open Plugins window");
+    void onPluginClick(MouseEvent me) {
+        System.out.println("Open Plugins window"+me.getEventType().toString());
         // TODO: 04/05/2016 Create a plugin window
     }
 
@@ -67,5 +72,12 @@ public class MainScene_Controller {
         assert mic != null : "fx:id=\"mic\" was not injected: check your FXML file 'main_scene.fxml'.";
         assert img_top_logo != null : "fx:id=\"img_top_logo\" was not injected: check your FXML file 'main_scene.fxml'.";
         System.out.println("Main Scene initialize");
+        mic.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                // TODO: 04/05/2016 implement it
+                sphinx_request.onRecognitionRequest();
+            }
+        });
     }
 }

@@ -21,10 +21,7 @@ import java.io.IOException;
  */
 public class Main extends Application{
 
-    private MainScene_Controller controller;
-    private Configuration mConfiguration;
-    private PluginManager mPluginManager;
-    private LiveSpeechRecognizer lmRecognizer;
+
 
     boolean recognitionState;
 
@@ -46,53 +43,6 @@ public class Main extends Application{
         Scene scene = new Scene(main_sc,stage.getWidth(),stage.getHeight());
         stage.setScene(scene);
         stage.show();
-        sphinxConfiguration();
         PluginManager.getInstance();
     }
-
-    void sphinxConfiguration() throws IOException {
-        mConfiguration = new Configuration();
-
-        mConfiguration.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
-        mConfiguration.setDictionaryPath("resource:/edu/cmu/sphinx/models/en-us/cmudict-en-us.dict");
-        mConfiguration.setLanguageModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us.lm.bin");
-
-        lmRecognizer = new LiveSpeechRecognizer(mConfiguration);
-
-    }
-
-    void onVoiceRecognitionStart(){
-        System.out.println("Speak ... and press the button");
-        recognitionState = true;
-        lmRecognizer.startRecognition(true);
-
-        while (true)
-        {
-            String result = lmRecognizer.getResult().getHypothesis();
-            System.out.println(result);
-            if (result.equals("exit"))
-            {
-                onVoiceRecognitionStop();
-            }
-        }
-
-    }
-
-    void onVoiceRecognitionStop(){
-        recognitionState = false;
-        lmRecognizer.stopRecognition();
-    }
-
-    EventHandler<MouseEvent> img_click = new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
-            System.out.println("click event : "+ recognitionState);
-            if (true == recognitionState){
-                onVoiceRecognitionStop();
-            }
-            else{
-                onVoiceRecognitionStart();
-            }
-        }
-    };
 }
