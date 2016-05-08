@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -97,7 +98,8 @@ public class Historic_Controller {
                 Label lbl_Timestamp = new Label(resTimestamp.toString());
                 gp_Historic.setHalignment(lbl_Level, HPos.CENTER);
                 gp_Historic.setHalignment(lbl_Message, HPos.CENTER);
-                gp_Historic.setHalignment(lbl_Timestamp, HPos.CENTER);
+                lbl_Timestamp.setWrapText(true);
+                lbl_Timestamp.setTextAlignment(TextAlignment.CENTER);
                 gp_Historic.add(lbl_Level, 0, i+1);
                 gp_Historic.add(lbl_Message, 1, i+1);
                 gp_Historic.add(lbl_Timestamp, 2, i+1);
