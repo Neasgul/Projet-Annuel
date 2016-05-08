@@ -62,7 +62,7 @@ module.exports = function (app) {
             if(err){
                 throw err;
             }
-            var format = data.toString().replaceAll("}\r\n", "},").replaceAll('\"', '');
+            var format = data.toString().replaceAll("}\r\n", "},");
             res.json("[" + format.substring(0,format.length-1) + "]");
         })
     });
