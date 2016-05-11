@@ -1,2 +1,5 @@
-{"level":"info","message":"### EXE ### The user has execute the file undefined","timestamp":"2016-04-27T07:58:24.231Z"}
-{"level":"info","message":"### EXE ### The user has execute the file test.exe","timestamp":"2016-04-27T08:01:33.311Z"}
+{"level":"Exe","message":"The user has execute the file test.exe","timestamp":"2016-05-11T16:46:32.347Z"}
+{"level":"Delete","message":"The user has delete the file test.exe","timestamp":"2016-05-11T16:46:37.727Z"}
+{"level":"Create","message":"The user has create the file test.exe","timestamp":"2016-05-11T16:46:43.832Z"}
+{"level":"Rename","message":"The user has rename the file undefined in test.exe","timestamp":"2016-05-11T16:46:50.774Z"}
+{"level":"Research","message":"The user has research in the browser test.exe","timestamp":"2016-05-11T16:46:55.677Z"}

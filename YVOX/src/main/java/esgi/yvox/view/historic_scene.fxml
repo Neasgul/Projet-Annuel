@@ -15,7 +15,7 @@
                   <Font name="Calibri Bold" size="13.0" />
                </font>
             </Button>
-            <Label contentDisplay="CENTER" layoutX="257.0" layoutY="37.0" style="-fx-background-color: #ffffff;" text="Historique" textFill="DARKORANGE" AnchorPane.leftAnchor="300.0">
+            <Label contentDisplay="CENTER" layoutX="257.0" layoutY="37.0" style="-fx-background-color: #ffffff;" text="Historique" textFill="DARKORANGE">
                <font>
                   <Font name="Calibri Bold" size="20.0" />
                </font>
@@ -29,7 +29,7 @@
       </AnchorPane>
     <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="ALWAYS">
          <children>
-            <GridPane fx:id="gp_Historic" gridLinesVisible="true" layoutX="9.0" layoutY="6.0" prefWidth="600.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+            <GridPane fx:id="gp_Historic" gridLinesVisible="true" layoutX="9.0" layoutY="6.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="8.0" prefWidth="77.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="469.0" minWidth="10.0" prefWidth="441.0" />

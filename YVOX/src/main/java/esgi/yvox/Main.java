@@ -21,10 +21,6 @@ import java.io.IOException;
  */
 public class Main extends Application{
 
-
-
-    boolean recognitionState;
-
     public static void main(String[] args) {
         launch(args);
     }
