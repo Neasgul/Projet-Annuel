@@ -8,60 +8,42 @@ import java.io.IOException;
 /**
  * Created by Benoit on 06/05/2016.
  */
-public class Sphinx_Thread implements Runnable{
-    private Thread t;
-    private String threadName;
-
+public class Sphinx_Thread extends Thread{
     private SphinxEvent sphinx_callback;
 
-    private Configuration mConfiguration;
-    private PluginManager mPluginManager;
-    private LiveSpeechRecognizer lmRecognizer;
+    private static Configuration mConfiguration;
+    private static LiveSpeechRecognizer lmRecognizer;
+    private static Sphinx_Controller parent;
 
-    public Sphinx_Thread(SphinxEvent event, String Name) {
-        this.threadName = Name;
+    public Sphinx_Thread(Sphinx_Controller controller,SphinxEvent event) {
         this.sphinx_callback = event;
+        this.parent = controller;
     }
 
     @Override
     public void run() {
-
-    }
-
-    public void start() {
-        System.out.println("Starting " +  threadName );
-        if (t == null)
-        {
-            t = new Thread (this, threadName);
-            t.start ();
+        System.out.println("thread starting");
+        if(mConfiguration == null && lmRecognizer == null){
+            Initialization();
         }
-    }
-
-
-    public void start_recognition() {
-        System.out.println(threadName + " start");
         lmRecognizer.startRecognition(true);
 
-        while (true)
+        while (!parent.AskToStop)
         {
             String result = lmRecognizer.getResult().getHypothesis();
             System.out.println(result);
             if (result.equals("exit"))
             {
-                this.stop_recognition();
-                sphinx_callback.onStop();
                 break;
             }
         }
-    }
-
-    public void stop_recognition() {
-        System.out.println(threadName + " stop");
+        System.out.println("thread stoping");
         lmRecognizer.stopRecognition();
-
+        sphinx_callback.onStop();
     }
 
     void Initialization() {
+        System.out.println("thread Initiazation");
         mConfiguration = new Configuration();
 
         mConfiguration.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
