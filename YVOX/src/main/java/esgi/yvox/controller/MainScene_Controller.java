@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -19,7 +20,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Teddy on 29/04/2016.
  */
-public class MainScene_Controller {
+public class MainScene_Controller{
     Sphinx_Request sphinx_request = new Sphinx_Request() {
         @Override
         public void onRecognitionRequest() {
@@ -32,6 +33,9 @@ public class MainScene_Controller {
 
     @FXML
     private URL location;
+
+    @FXML
+    private Label result;
 
     @FXML
     private ImageView mic;
@@ -72,6 +76,8 @@ public class MainScene_Controller {
         assert mic != null : "fx:id=\"mic\" was not injected: check your FXML file 'main_scene.fxml'.";
         assert img_top_logo != null : "fx:id=\"img_top_logo\" was not injected: check your FXML file 'main_scene.fxml'.";
         System.out.println("Main Scene initialize");
+        result.setText("Recognition not started");
+
         mic.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -79,5 +85,9 @@ public class MainScene_Controller {
                 sphinx_request.onRecognitionRequest();
             }
         });
+    }
+
+    public void setResultText(String text){
+        result.setText(text);
     }
 }

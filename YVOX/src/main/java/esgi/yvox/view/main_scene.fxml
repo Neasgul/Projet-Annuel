@@ -41,4 +41,7 @@
             <Image url="@../../../../../../img/logo_icone.png" />
          </image></ImageView>
    </top>
+   <bottom>
+      <Label fx:id="result" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>
