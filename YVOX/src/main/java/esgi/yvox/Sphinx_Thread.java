@@ -51,7 +51,7 @@ public class Sphinx_Thread extends Task{
             //sphinx_callback.onResult(result);
             updateMessage(result);
             System.out.println(result);
-            if (result.equals("exit"))
+            if (result.equals("exit") || result.equals("stop") || result.equals("cancel"))
             {
                 break;
             }
@@ -59,6 +59,7 @@ public class Sphinx_Thread extends Task{
         System.out.println("thread stoping");
         lmRecognizer.stopRecognition();
         sphinx_callback.onStop();
+        System.out.println("Recognition finished correctly");
         return true;
     }
 
