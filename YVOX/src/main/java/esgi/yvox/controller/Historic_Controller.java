@@ -20,6 +20,7 @@ import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Date;
@@ -59,9 +60,9 @@ public class Historic_Controller {
         getHistoric();
     }
 
-    void getHistoric(){
+    void getHistoric() {
         HttpURLConnection historic_connection = null;
-        try{
+        try {
             URL historic_url = new URL("http://localhost:8888/CommandLog");
             historic_connection = (HttpURLConnection) historic_url.openConnection();
             historic_connection.setRequestMethod("GET");
@@ -73,17 +74,17 @@ public class Historic_Controller {
             JSONParser jsonParser = new JSONParser();
             while ((bufferline = buffer.readLine()) != null) {
                 res = bufferline;
-                res = res.substring(1, res.length()-1).replace("\\\"","\"");
+                res = res.substring(1, res.length() - 1).replace("\\\"", "\"");
                 Object object = jsonParser.parse(res);
                 jsonArray = (JSONArray) object;
             }
             buffer.close();
-            if (res == ""){
+            if (res == "") {
                 lbl_noHistoric.setVisible(true);
                 gp_Historic.setVisible(false);
                 return;
             }
-            int count = (res.length() - res.replace("},","").length()) / 2;
+            int count = (res.length() - res.replace("},", "").length()) / 2;
             Object objLevel = "level";
             Object objMessage = "message";
             Object objTimestamp = "timestamp";
@@ -100,12 +101,15 @@ public class Historic_Controller {
                 gp_Historic.setHalignment(lbl_Message, HPos.CENTER);
                 lbl_Timestamp.setWrapText(true);
                 lbl_Timestamp.setTextAlignment(TextAlignment.CENTER);
-                gp_Historic.add(lbl_Level, 0, i+1);
-                gp_Historic.add(lbl_Message, 1, i+1);
-                gp_Historic.add(lbl_Timestamp, 2, i+1);
+                gp_Historic.add(lbl_Level, 0, i + 1);
+                gp_Historic.add(lbl_Message, 1, i + 1);
+                gp_Historic.add(lbl_Timestamp, 2, i + 1);
             }
-        }catch (Exception e){
-            e.printStackTrace();
+        } catch (ConnectException conExc) {
+            lbl_noHistoric.setVisible(true);
+            gp_Historic.setVisible(false);
+        } catch (Exception ex){
+            ex.printStackTrace();
         }finally {
             historic_connection.disconnect();
         }

@@ -51,7 +51,7 @@ public class Sphinx_Thread extends Task{
             //sphinx_callback.onResult(result);
             updateMessage(result);
             System.out.println(result);
-            if (result.equals("exit"))
+            if (result.equals("exit") || result.equals("stop") || result.equals("cancel"))
             {
                 break;
             }
@@ -59,7 +59,27 @@ public class Sphinx_Thread extends Task{
         System.out.println("thread stoping");
         lmRecognizer.stopRecognition();
         sphinx_callback.onStop();
+<<<<<<< HEAD
         return true;
+=======
+        System.out.println("Recognition finished correctly");
+    }
+
+    void Initialization() {
+        System.out.println("thread Initiazation");
+        mConfiguration = new Configuration();
+
+        mConfiguration.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
+        mConfiguration.setDictionaryPath("resource:/edu/cmu/sphinx/models/en-us/cmudict-en-us.dict");
+        mConfiguration.setLanguageModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us.lm.bin");
+
+        try {
+            lmRecognizer = new LiveSpeechRecognizer(mConfiguration);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+>>>>>>> feature
     }
 
     interface SphinxEvent{
