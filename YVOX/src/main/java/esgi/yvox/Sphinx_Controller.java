@@ -1,10 +1,13 @@
 package esgi.yvox;
 
+import javafx.concurrent.Task;
+
 /**
  * Created by Benoit on 06/05/2016.
  */
 public class Sphinx_Controller implements Sphinx_Request{
     private static Sphinx_Controller mInstance;
+    private static Sphinx_Thread sph_task;
     private static Thread sph_thread;
     //state == true Recognition is running, if its false, recognition is stopped
     private static boolean state;
@@ -24,7 +27,8 @@ public class Sphinx_Controller implements Sphinx_Request{
             mInstance = new Sphinx_Controller();
         }
         if (sph_thread == null) {
-            sph_thread = new Thread(new Sphinx_Thread(mInstance,sph_callback));
+            sph_task = new Sphinx_Thread(mInstance,sph_callback);
+            sph_thread = new Thread(sph_task);
         }
         return mInstance;
     }
@@ -45,5 +49,9 @@ public class Sphinx_Controller implements Sphinx_Request{
             sph_thread.start();
 
         }
+    }
+
+    public Task getTask(){
+        return sph_task;
     }
 }

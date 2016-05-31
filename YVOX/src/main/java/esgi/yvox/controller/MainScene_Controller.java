@@ -83,8 +83,10 @@ public class MainScene_Controller{
             public void handle(MouseEvent event) {
                 // TODO: 04/05/2016 implement it
                 sphinx_request.onRecognitionRequest();
+                result.textProperty().bind(Sphinx_Controller.getInstance().getTask().messageProperty());
             }
         });
+
     }
 
     public void setResultText(String text){

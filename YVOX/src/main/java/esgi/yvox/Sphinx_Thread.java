@@ -2,13 +2,14 @@ package esgi.yvox;
 
 import edu.cmu.sphinx.api.Configuration;
 import edu.cmu.sphinx.api.LiveSpeechRecognizer;
+import javafx.concurrent.Task;
 
 import java.io.IOException;
 
 /**
  * Created by Benoit on 06/05/2016.
  */
-public class Sphinx_Thread extends Thread{
+public class Sphinx_Thread extends Task{
     private SphinxEvent sphinx_callback;
 
     private static Configuration mConfiguration;
@@ -18,28 +19,6 @@ public class Sphinx_Thread extends Thread{
     public Sphinx_Thread(Sphinx_Controller controller,SphinxEvent event) {
         this.sphinx_callback = event;
         this.parent = controller;
-    }
-
-    @Override
-    public void run() {
-        System.out.println("thread starting");
-        if(mConfiguration == null && lmRecognizer == null){
-            Initialization();
-        }
-        lmRecognizer.startRecognition(true);
-
-        while (!parent.AskToStop)
-        {
-            String result = lmRecognizer.getResult().getHypothesis();
-            System.out.println(result);
-            if (result.equals("exit"))
-            {
-                break;
-            }
-        }
-        System.out.println("thread stoping");
-        lmRecognizer.stopRecognition();
-        sphinx_callback.onStop();
     }
 
     void Initialization() {
@@ -56,6 +35,31 @@ public class Sphinx_Thread extends Thread{
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    protected Object call() throws Exception {
+        System.out.println("thread starting");
+        if(mConfiguration == null && lmRecognizer == null){
+            Initialization();
+        }
+        lmRecognizer.startRecognition(true);
+
+        while (!parent.AskToStop)
+        {
+            String result = lmRecognizer.getResult().getHypothesis();
+            //sphinx_callback.onResult(result);
+            updateMessage(result);
+            System.out.println(result);
+            if (result.equals("exit"))
+            {
+                break;
+            }
+        }
+        System.out.println("thread stoping");
+        lmRecognizer.stopRecognition();
+        sphinx_callback.onStop();
+        return true;
     }
 
     interface SphinxEvent{
