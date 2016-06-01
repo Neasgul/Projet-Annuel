@@ -57,6 +57,8 @@ public class MainScene_Controller{
             Parent hist_window = loader.load();
 
             Stage main_window = (Stage) button_historic.getScene().getWindow();
+            hist_window.minWidth(main_window.getWidth());
+            hist_window.minHeight(main_window.getHeight());
             Scene scene_historic = new Scene(hist_window, main_window.getWidth(), main_window.getHeight());
             main_window.setScene(scene_historic);
             main_window.show();

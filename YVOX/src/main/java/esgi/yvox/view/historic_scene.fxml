@@ -8,14 +8,14 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esgi.yvox.controller.Historic_Controller">
    <children>
-    <AnchorPane prefHeight="90.0" prefWidth="600.0">
+    <AnchorPane prefHeight="80.0" prefWidth="600.0">
          <children>
             <Button fx:id="button_home" alignment="BASELINE_RIGHT" layoutX="-29.0" layoutY="23.0" mnemonicParsing="false" onAction="#onHomeClick" prefHeight="51.0" prefWidth="87.0" style="-fx-background-color: #ff8c00; -fx-background-radius: 5em;" text="Accueil" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Calibri Bold" size="13.0" />
                </font>
             </Button>
-            <Label contentDisplay="CENTER" layoutX="257.0" layoutY="37.0" style="-fx-background-color: #ffffff;" text="Historique" textFill="DARKORANGE">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="257.0" layoutY="37.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ffffff;" text="Historique" textFill="DARKORANGE" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="37.0">
                <font>
                   <Font name="Calibri Bold" size="20.0" />
                </font>
@@ -29,31 +29,32 @@
       </AnchorPane>
     <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
          <children>
-            <GridPane fx:id="gp_Historic" gridLinesVisible="true" layoutX="9.0" layoutY="6.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="8.0" prefWidth="77.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="469.0" minWidth="10.0" prefWidth="441.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="80.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
-              </rowConstraints>
-               <children>
-                  <Label text="Type" GridPane.halignment="CENTER" />
-                  <Label text="Action" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                  <Label text="Date" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-               </children>
-            </GridPane>
+            <ScrollPane fitToWidth="true" layoutX="29.5" layoutY="5.5" prefViewportHeight="31.0" prefViewportWidth="541.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="5.0">
+               <content>
+                  <GridPane fx:id="gp_Historic" gridLinesVisible="true" layoutX="9.0" layoutY="6.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ffffff;" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="8.0" prefWidth="77.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="469.0" minWidth="10.0" prefWidth="441.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="80.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Type" GridPane.halignment="CENTER" />
+                        <Label text="Action" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Label text="Date" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                     </children>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+            <Label fx:id="lbl_noHistoric" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Aucun historique" textFill="DARKORANGE" visible="false" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+               <font>
+                  <Font name="Calibri Bold" size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
-      <Label fx:id="lbl_noHistoric" text="Aucun historique" textFill="DARKORANGE" visible="false">
-         <VBox.margin>
-            <Insets left="290.0" top="50.0" />
-         </VBox.margin>
-         <font>
-            <Font name="Calibri Bold" size="14.0" />
-         </font>
-      </Label>
    </children>
    <opaqueInsets>
       <Insets />
