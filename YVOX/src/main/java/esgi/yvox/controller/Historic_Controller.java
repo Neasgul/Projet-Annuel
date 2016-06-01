@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.TextAlignment;
@@ -38,6 +39,9 @@ public class Historic_Controller {
 
     @FXML
     private Label lbl_noHistoric;
+
+    @FXML
+    private ScrollPane ScrollPaneHistoric;
 
     @FXML
     void onHomeClick(ActionEvent event) {
@@ -82,6 +86,7 @@ public class Historic_Controller {
             if (res == "") {
                 lbl_noHistoric.setVisible(true);
                 gp_Historic.setVisible(false);
+                ScrollPaneHistoric.setVisible(false);
                 return;
             }
             int count = (res.length() - res.replace("},", "").length()) / 2;
@@ -108,6 +113,7 @@ public class Historic_Controller {
         } catch (ConnectException conExc) {
             lbl_noHistoric.setVisible(true);
             gp_Historic.setVisible(false);
+            ScrollPaneHistoric.setVisible(false);
         } catch (Exception ex){
             ex.printStackTrace();
         }finally {

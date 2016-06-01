@@ -29,7 +29,7 @@
       </AnchorPane>
     <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
          <children>
-            <ScrollPane fitToWidth="true" layoutX="29.5" layoutY="5.5" prefViewportHeight="31.0" prefViewportWidth="541.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="5.0">
+            <ScrollPane fx:id="ScrollPaneHistoric" fitToWidth="true" layoutX="29.5" layoutY="5.5" prefViewportHeight="31.0" prefViewportWidth="541.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="5.0">
                <content>
                   <GridPane fx:id="gp_Historic" gridLinesVisible="true" layoutX="9.0" layoutY="6.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ffffff;" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
                     <columnConstraints>
