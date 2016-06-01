@@ -1,20 +1,13 @@
 package esgi.yvox;
 
-import edu.cmu.sphinx.api.Configuration;
-import edu.cmu.sphinx.api.LiveSpeechRecognizer;
-import esgi.yvox.controller.MainScene_Controller;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 /**
  * Created by Benoit on 17/03/2016.
@@ -27,7 +20,7 @@ public class Main extends Application{
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/main_scene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main_scene.fxml"));
         Parent main_sc = loader.load();
         stage.setTitle("YVOX Voice Controller");
         stage.getIcons().add(new Image("file:img/logo_icone.png"));
@@ -40,6 +33,6 @@ public class Main extends Application{
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-        PluginManager.getInstance();
+        //PluginManager.getInstance();
     }
 }

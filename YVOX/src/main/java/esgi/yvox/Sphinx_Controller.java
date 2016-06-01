@@ -14,7 +14,7 @@ public class Sphinx_Controller implements Sphinx_Request{
     public boolean AskToStop = false;
 
     private static Sphinx_Thread.SphinxEvent sph_callback  =new Sphinx_Thread.SphinxEvent() {
-        @Override
+
         public void onStop() {
             state = false;
             System.out.println("Destroying sph_thread");
@@ -37,7 +37,7 @@ public class Sphinx_Controller implements Sphinx_Request{
         state = false;
     }
 
-    @Override
+
     public void onRecognitionRequest() {
         System.out.println("state : "+state);
         if (state){

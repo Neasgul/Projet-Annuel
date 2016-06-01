@@ -32,13 +32,13 @@
    <center>
       <ImageView fx:id="mic" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
-            <Image url="@../../../../../../img/mic.png" />
+            <Image url="@../img/mic.png" />
          </image></ImageView>
    </center>
    <top>
       <ImageView fx:id="img_top_logo" fitHeight="94.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
-            <Image url="@../../../../../../img/logo_icone.png" />
+            <Image url="@../img/logo_icone.png" />
          </image></ImageView>
    </top>
    <bottom>
