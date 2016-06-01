@@ -1,17 +1,14 @@
 package esgi.yvox.controller;
 
-import com.sun.deploy.util.StringUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
@@ -23,7 +20,6 @@ import java.io.InputStreamReader;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Date;
 
 /**
  * Created by Teddy on 04/05/2016.
@@ -43,7 +39,7 @@ public class Historic_Controller {
     void onHomeClick(ActionEvent event) {
         System.out.println("Open Home window");
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/main_scene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main_scene.fxml"));
             Parent home_window = loader.load();
 
             Stage main_window = (Stage) button_home.getScene().getWindow();

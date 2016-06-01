@@ -22,7 +22,6 @@ import java.util.ResourceBundle;
  */
 public class MainScene_Controller{
     Sphinx_Request sphinx_request = new Sphinx_Request() {
-        @Override
         public void onRecognitionRequest() {
             Sphinx_Controller.getInstance().onRecognitionRequest();
         }
@@ -53,7 +52,7 @@ public class MainScene_Controller{
         System.out.println("Open History window");
         // TODO: 04/05/2016 Create a History window
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/historic_scene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/historic_scene.fxml"));
             Parent hist_window = loader.load();
 
             Stage main_window = (Stage) button_historic.getScene().getWindow();
@@ -79,7 +78,6 @@ public class MainScene_Controller{
         result.setText("Recognition not started");
 
         mic.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
             public void handle(MouseEvent event) {
                 // TODO: 04/05/2016 implement it
                 sphinx_request.onRecognitionRequest();
