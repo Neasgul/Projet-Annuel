@@ -27,7 +27,7 @@ public class PluginManager {
     }
 
     private PluginManager() {
-        JSONObject jsonPlugin = getPluginJSON();
+        /*JSONObject jsonPlugin = getPluginJSON();
         JSONArray jsonList = (JSONArray) jsonPlugin.get("list");
         for(int i =0;i<jsonList.size();i++){
             JSONObject plugin = (JSONObject) jsonList.get(i);
@@ -39,7 +39,7 @@ public class PluginManager {
                     plugin.get("version").toString()
                     );
             mPluginList.add(newPlugin);
-        }
+        }*/
     }
     private  JSONObject getPluginJSON() {
         ClassLoader classLoader = getClass().getClassLoader();

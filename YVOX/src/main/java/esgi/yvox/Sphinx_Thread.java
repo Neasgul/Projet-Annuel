@@ -21,7 +21,7 @@ public class Sphinx_Thread extends Task{
         this.parent = controller;
     }
 
-    void Initialization() {
+    void initialization() {
         System.out.println("thread Initiazation");
         mConfiguration = new Configuration();
 
@@ -40,7 +40,7 @@ public class Sphinx_Thread extends Task{
     protected Object call() throws Exception {
         System.out.println("thread starting");
         if(mConfiguration == null && lmRecognizer == null){
-            Initialization();
+            initialization();
         }
         lmRecognizer.startRecognition(true);
 
