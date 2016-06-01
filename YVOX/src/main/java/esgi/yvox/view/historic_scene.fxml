@@ -27,7 +27,7 @@
             </Button>
          </children>
       </AnchorPane>
-    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
          <children>
             <GridPane fx:id="gp_Historic" gridLinesVisible="true" layoutX="9.0" layoutY="6.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
               <columnConstraints>

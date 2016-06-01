@@ -34,7 +34,6 @@ public class Sphinx_Thread extends Task{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
