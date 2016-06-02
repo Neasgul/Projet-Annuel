@@ -2,6 +2,7 @@ var fs = require("fs");
 var LogType = require("./LogType");
 var winston = require('winston');
 var filePath = "./Command.log";
+var DBUtils = require('./DBUtils');
 
 var myLog = new LogType();
 
@@ -33,44 +34,44 @@ String.prototype.replaceAll = function (search, replacement) {
 
 
 module.exports = function (app) {
-    app.post('/exe', function (req, res) {
-        var command = req.headers.command;
-        logger.Exe(myLog.addLogExe(command));
-        res.end();
-    });
 
-    app.post('/delete', function (req, res) {
-        var command = req.headers.command;
-        logger.Delete(myLog.addLogDelete(command));
-        res.end();
-    });
-
-    app.post('/create', function (req, res) {
-        var command = req.headers.command;
-        logger.Create(myLog.addLogCreate(command));
-        res.end();
-    });
-
-    app.post('/rename', function (req, res) {
-        var oldcommand = req.headers.oldcommand;
-        var command = req.headers.command;
-        logger.Rename(myLog.addLogRename(oldcommand, command));
-        res.end();
-    });
-
-    app.post('/research', function (req, res) {
-        var command = req.headers.command;
-        logger.Research(myLog.addLogResearch(command));
-        res.end();
-    });
-
-    app.get('/CommandLog',function (req,res) {
-        fs.readFile(filePath,function (err, data) {
-            if(err){
-                throw err;
+    app.post('/command', function (req, res) {
+        var CommandUtils = DBUtils.Command;
+        var uuid = req.headers.uuid;
+        var level = req.headers.level;
+        var message = req.headers.message;
+        CommandUtils.CreateCommandEntry(uuid, level, message, function (result, err) {
+            if(result){
+                res.json({
+                    code: 0,
+                    result: result
+                })
+            }else {
+                res.json({
+                    code: 1,
+                    err : err
+                })
             }
-            var format = data.toString().replaceAll("}\r\n", "},");
-            res.json("[" + format.substring(0,format.length-1) + "]");
+        })
+    });
+    app.get('/CommandLog/:uuid_user',function (req,res) {
+        var uuid_user = req.params.uuid_user;
+        var CommandUtils = DBUtils.Command;
+        CommandUtils.GetCommandbyUUID(uuid_user, function (result, err) {
+            if(result){
+                console.log(result);
+                res.json({
+                    code : 0,
+                    result : result
+                })
+            }
+            else {
+                console.log(err);
+                res.json({
+                    code : 1,
+                    result : err
+                })
+            }
         })
     });
 };
