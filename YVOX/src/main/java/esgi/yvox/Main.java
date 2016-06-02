@@ -27,6 +27,7 @@ public class Main extends Application{
 
     @Override
     public void start(Stage stage) throws Exception {
+        User_UUID.readUUID();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main_scene.fxml"));
         Parent main_sc = loader.load();
         stage.setTitle("YVOX Voice Controller");
@@ -40,7 +41,6 @@ public class Main extends Application{
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-        User_UUID.readUUID();
         //PluginManager.getInstance();
     }
 }
