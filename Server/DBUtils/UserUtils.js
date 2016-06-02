@@ -4,12 +4,11 @@ var models = require("../models");
 
 var UserUtils = function () {}
 
-UserUtils.prototype.CreateUser = function (firstname, lastname, familly,callback) {
+UserUtils.prototype.CreateUser = function (uuid, name,callback) {
     var User = models.User;
     User.create({
-        lastname : lastname,
-        firstname : firstname,
-        id_familly : familly
+        token : uuid,
+        name : name
     }).then(function (result) {
         callback(result);
     }).catch(function (err) {
@@ -28,7 +27,7 @@ UserUtils.prototype.GetAllUser = function (callback) {
 UserUtils.prototype.GetUserbyUUID = function (uuid_user,callback) {
     var User = models.User;
     User.findAll({
-        where : uuid_user
+        where : {token:uuid_user}
     }).then(function (result) {
         callback(result);
     }).catch(function (err) {

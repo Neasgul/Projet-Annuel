@@ -1,37 +1,9 @@
-var fs = require("fs");
-var LogType = require("./LogType");
-var winston = require('winston');
-var filePath = "./Command.log";
 var DBUtils = require('./DBUtils');
-
-var myLog = new LogType();
-
-
-var logger = new winston.Logger({
-    level: 'Exe',
-    levels: {
-        Exe: 0,
-        Delete: 0,
-        Create: 0,
-        Rename: 0,
-        Research: 0,
-    },
-    transports: [
-        new winston.transports.File({
-            filename: './Command.log',
-            handleExceptions: false,
-            json: true,
-            colorize: false
-        })
-    ],
-    exitOnError: false
-});
 
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
     return target.split(search).join(replacement);
 }
-
 
 module.exports = function (app) {
 

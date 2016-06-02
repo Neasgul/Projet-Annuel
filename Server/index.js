@@ -13,6 +13,7 @@ app.use(function (req,res,next) {
 })
 
 require('./Command')(app);
+require('./User')(app);
 
 app.listen(8888, function () {
     console.log("Server started port 8888...");
