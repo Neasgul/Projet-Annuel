@@ -8,7 +8,7 @@ module.exports = sequelize.import("user",function (sequelize, Datatypes) {
             autoIncrement : true
         },
         token : {
-            type = Datatypes.UUID
+            type : Datatypes.UUID
         },
         name : {
             type : Datatypes.STRING

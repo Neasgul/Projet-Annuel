@@ -7,11 +7,8 @@ module.exports = sequelize.import("command",function (sequelize, Datatypes) {
             primaryKey : true,
             autoIncrement : true
         },
-        id_user: {
+        uuid_user: {
             type : Datatypes.BIGINT
-        },
-        timestamps : {
-            type : Datatypes.DATE
         },
         level : {
             type : Datatypes.STRING
