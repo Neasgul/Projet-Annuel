@@ -64,22 +64,20 @@ public class Historic_Controller {
     void getHistoric() {
         HttpURLConnection historic_connection = null;
         try {
-            URL historic_url = new URL("http://localhost:8888/CommandLog");
-            historic_connection = (HttpURLConnection) historic_url.openConnection();
+            URL historic_url = new URL("http://localhost:8888/CommandLog/" + 42);
+            //URL historic_url = new URL("http://localhost:8888/CommandLog/" + User_UUID.getUuid());
+            historic_connection = (HttpURLConnection ) historic_url.openConnection();
             historic_connection.setRequestMethod("GET");
 
             BufferedReader buffer = new BufferedReader(new InputStreamReader(historic_connection.getInputStream()));
             String bufferline = "";
             String res = "";
-            JSONArray jsonArray = new JSONArray();
-            JSONParser jsonParser = new JSONParser();
             while ((bufferline = buffer.readLine()) != null) {
-                res = bufferline;
-                res = res.substring(1, res.length() - 1).replace("\\\"", "\"");
-                Object object = jsonParser.parse(res);
-                jsonArray = (JSONArray) object;
+                res += bufferline;
             }
             buffer.close();
+            JSONParser jsonParser = new JSONParser();
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(res);
             if (res == "") {
                 lbl_noHistoric.setVisible(true);
                 gp_Historic.setVisible(false);
@@ -89,7 +87,7 @@ public class Historic_Controller {
             int count = (res.length() - res.replace("},", "").length()) / 2;
             Object objLevel = "level";
             Object objMessage = "message";
-            Object objTimestamp = "timestamp";
+            Object objTimestamp = "created_at";
             for (int i = 0; i <= count; i++) {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                 Object resLevel = jsonObject.get(objLevel);

@@ -42,7 +42,7 @@ public class UUID_Processor {
         HttpURLConnection uuid_connection = null;
         try{
             // Request send
-            URL uuid_url = new URL("http://10.66.126.43:8888/user/add");
+            URL uuid_url = new URL("http://localhost:8888/user/add");
             uuid_connection = (HttpURLConnection) uuid_url.openConnection();
             uuid_connection.setRequestMethod("POST");
 
