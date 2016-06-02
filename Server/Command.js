@@ -9,9 +9,9 @@ module.exports = function (app) {
 
     app.post('/command', function (req, res) {
         var CommandUtils = DBUtils.Command;
-        var uuid = req.headers.uuid;
-        var level = req.headers.level;
-        var message = req.headers.message;
+        var uuid = req.body.uuid;
+        var level = req.body.level;
+        var message = req.body.message;
         CommandUtils.CreateCommandEntry(uuid, level, message, function (result, err) {
             if(result){
                 res.json({
@@ -31,16 +31,10 @@ module.exports = function (app) {
         var CommandUtils = DBUtils.Command;
         CommandUtils.GetCommandbyUUID(uuid_user, function (result, err) {
             if(result){
-                console.log(result);
-                res.json({
-                    code : 0,
-                    result : result
-                })
+                res.json(result)
             }
             else {
-                console.log(err);
                 res.json({
-                    code : 1,
                     result : err
                 })
             }

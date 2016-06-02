@@ -3,8 +3,8 @@ var DBUtils = require('./DBUtils');
 module.exports = function (app) {
     app.post('/user/add',function (req, res) {
         var UserUtils = DBUtils.User;
-        var uuid = req.headers.uuid;
-        var name = req.headers.name;
+        var uuid = req.body.uuid;
+        var name = req.body.name;
         UserUtils.CreateUser(uuid,name, function (result, err) {
             if(result){
                 res.json({
