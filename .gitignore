@@ -2,4 +2,4 @@
 build
 /out/
 target
-Command.log
+node_modules
