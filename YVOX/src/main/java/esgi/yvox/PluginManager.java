@@ -2,12 +2,9 @@ package esgi.yvox;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import sun.misc.IOUtils;
 
 import java.io.*;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -30,7 +27,7 @@ public class PluginManager {
     }
 
     private PluginManager() {
-        JSONObject jsonPlugin = getPluginJSON();
+        /*JSONObject jsonPlugin = getPluginJSON();
         JSONArray jsonList = (JSONArray) jsonPlugin.get("list");
         for(int i =0;i<jsonList.size();i++){
             JSONObject plugin = (JSONObject) jsonList.get(i);
@@ -42,7 +39,7 @@ public class PluginManager {
                     plugin.get("version").toString()
                     );
             mPluginList.add(newPlugin);
-        }
+        }*/
     }
     private  JSONObject getPluginJSON() {
         ClassLoader classLoader = getClass().getClassLoader();
