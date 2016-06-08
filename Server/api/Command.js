@@ -1,4 +1,4 @@
-var DBUtils = require('./DBUtils');
+var DBUtils = require('../DBUtils');
 
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;

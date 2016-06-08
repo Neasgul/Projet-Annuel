@@ -1,4 +1,4 @@
-var DBUtils = require('./DBUtils');
+var DBUtils = require('../DBUtils');
 
 module.exports = function (app) {
     app.post('/user/add',function (req, res) {
