@@ -3,6 +3,8 @@ var bodyParser = require("body-parser");
 var fs = require('fs');
 
 var app = express();
+var DEFAULT_PORT = 8888;
+var port = process.env.PORT || DEFAULT_PORT
 
 app.use(bodyParser.urlencoded({
     "extended": false
@@ -33,6 +35,7 @@ var file = __dirname + '/Command.log';
 app.use(function(req, res, next) {
   res.status(404).send('404 : Page Not Found')
 });
-app.listen(8888, function () {
-    console.log("Server started port 8888...");
+
+app.listen(port, function () {
+    console.log("Server started port "+port);
 });
