@@ -1,5 +1,6 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var favicon = require('serve-favicon');
 var fs = require('fs');
 
 var app = express();
@@ -9,7 +10,7 @@ var port = process.env.PORT || DEFAULT_PORT
 app.use(bodyParser.urlencoded({
     "extended": false
 }));
-
+app.use(favicon(__dirname+'/favicon.ico'));
 app.use(function (req,res,next) {
     console.log(req.path);
     next();
