@@ -3,6 +3,9 @@ package esgi.yvox;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.jar.JarFile;
@@ -24,25 +27,33 @@ public class PluginLoader {
 
     }
 
+    public String[] getFiles() {
+        return files;
+    }
+
+    public void setFiles(String[] files) {
+        this.files = files;
+    }
+
     private void initPlugin() throws Exception {
         if (files == null){
             throw new Exception("File not defined");
         }
 
-        File[] f = new File[files.length];
+        Path[] f = new Path[files.length];
         URLClassLoader loader;
         String string = "";
         Enumeration enumeration;
         Class tmpClass = null;
 
         for (int i = 0; i < f.length;i++){
-            f[i] = new File(files[i]);
-            if (!f[i].exists()){
+            f[i] = Paths.get(files[i]);
+            if (f[i] == null){
                 break;
             }
 
-            loader = new URLClassLoader(new URL[]{f[i].toURL()});
-            JarFile jarFile = new JarFile(f[i].getAbsolutePath());
+            loader = new URLClassLoader(new URL[]{f[i].toUri().toURL()});
+            JarFile jarFile = new JarFile(String.valueOf(f[i].toAbsolutePath()));
             enumeration = jarFile.entries(); // Get content of jar
 
             while (enumeration.hasMoreElements()){
