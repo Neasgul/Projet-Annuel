@@ -1,4 +1,4 @@
-var DBUtils = require('./DBUtils');
+var DBUtils = require('../DBUtils');
 
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
@@ -30,6 +30,21 @@ module.exports = function (app) {
         var uuid_user = req.params.uuid_user;
         var CommandUtils = DBUtils.Command;
         CommandUtils.GetCommandbyUUID(uuid_user, function (result, err) {
+            if(result){
+                res.json(result)
+            }
+            else {
+                res.json({
+                    result : err
+                })
+            }
+        })
+    });
+    app.get('/CommandLog/:uuid_user/:level',function (req,res) {
+        var uuid_user = req.params.uuid_user;
+        var level = req.params.level;
+        var CommandUtils = DBUtils.Command;
+        CommandUtils.GetCommandbyLevel(uuid_user, level,function (result, err) {
             if(result){
                 res.json(result)
             }
