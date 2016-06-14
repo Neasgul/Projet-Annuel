@@ -31,7 +31,7 @@ var file = __dirname + '/Command.log';
 })
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  res.send('404: Page Not Found', 404)
+  res.status(404).send('404 : Page Not Found')
 });
 app.listen(8888, function () {
     console.log("Server started port 8888...");
