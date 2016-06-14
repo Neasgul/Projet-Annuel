@@ -17,7 +17,7 @@ require('./api/Command')(app);
 require('./api/User')(app);
 
 app.get('/',function (req, res) {
-    fs.readFile('public/index.html',function (err, data){
+    fs.readFile('Server/public/index.html',function (err, data){
         res.writeHeader(200, {"Content-Type": "text/html"});
         res.write(data);
         res.end();
