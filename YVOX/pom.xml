@@ -61,7 +61,5 @@
             <artifactId>sphinx4-data</artifactId>
             <version>5prealpha-SNAPSHOT</version>
         </dependency>
-
-
     </dependencies>
 </project>

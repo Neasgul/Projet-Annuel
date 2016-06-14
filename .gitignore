@@ -2,4 +2,5 @@
 build
 /out/
 target
-Command.log
+token.txt
+node_modules

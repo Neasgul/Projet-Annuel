@@ -1,5 +1,7 @@
 package esgi.yvox;
 
+import esgi.yvox.annotation.UUID;
+import esgi.yvox.annotation.UUID_Processor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -9,17 +11,23 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.FileReader;
+import java.io.LineNumberReader;
+
 /**
  * Created by Benoit on 17/03/2016.
  */
 public class Main extends Application{
 
+    @UUID
     public static void main(String[] args) {
+        UUID_Processor uuid_processor = new UUID_Processor(Main.class);
         launch(args);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+        User_UUID.readUUID();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main_scene.fxml"));
         Parent main_sc = loader.load();
         stage.setTitle("YVOX Voice Controller");

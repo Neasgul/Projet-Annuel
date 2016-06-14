@@ -1,0 +1,15 @@
+Team City = Jenkins plus facile à mettre en place.
+Comprend nativement maven : pas besoin de re-écrire les étapes de build.
+les deux peuvent envoyer directement sur heroku
+
+Heroku DB : PostGres (juste une ligne à changer dans le code du serveur + le npm install --save)
+Heroku : Posibilité de push sur le "repo" de l'app heroku
+
+
+Possibilité :
+
+1. Repo gitlab -> Team City(Serveur Maison) -> Herbergement Heroku
+2. Repo gitlab -> Team City(Serveur Maison) -> Heroku(Serveur DB maison)
+3. Repo gitlab -> Team City(Serveur Maison) -> Hebergement maison
+4. Repo gitlab -> Jenkins(Serveur Maison) -> Hebergement Heroku
+5. Repo gitlab -> Jenkins(Serveur Maison) -> Heroku(Serveur DB maison)
