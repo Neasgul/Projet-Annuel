@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "This is a server node.js that display the log of the the application YVOX",
-  "main": "index.js",
+  "main": "Server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
