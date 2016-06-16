@@ -1,9 +1,7 @@
-package esgi.yvox;
+package esgi.yvox.plugins;
 
-import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -13,18 +11,32 @@ import java.util.jar.JarFile;
 /**
  * Created by ostro on 13/06/2016.
  */
-public class PluginLoader {
+public class PluginsLoader {
 
-    private String[]files;
+    private String[] files;
 
-    private ArrayList classPlugins;
+    private ArrayList classLanguagePlugins;
 
-    public void loadAllPlugins() throws Exception {
+    public PluginsLoader(){
+        classLanguagePlugins = new ArrayList();
+    }
+
+    public PluginsLoader(String[] files) {
+        this();
+        this.files = files;
+    }
+
+    public LanguagePlugins[] loadAllLanguagePlugins() throws Exception {
 
         initPlugin();
 
-        //TODO
+        LanguagePlugins[] langPlugins = new LanguagePlugins[classLanguagePlugins.size()];
 
+        for (int i = 0;i < langPlugins.length;i++){
+            langPlugins[i] = (LanguagePlugins) ((Class) classLanguagePlugins.get(i)).newInstance();
+        }
+
+        return langPlugins;
     }
 
     public String[] getFiles() {
@@ -44,7 +56,7 @@ public class PluginLoader {
         URLClassLoader loader;
         String string = "";
         Enumeration enumeration;
-        Class tmpClass = null;
+        Class clazz = null;
 
         for (int i = 0; i < f.length;i++){
             f[i] = Paths.get(files[i]);
@@ -63,10 +75,10 @@ public class PluginLoader {
                     string = string.substring(string.length()-6);
                     string = string.replaceAll("/",".");
 
-                    tmpClass = Class.forName(string, true, loader);
-                    for (int j = 0; j < tmpClass.getInterfaces().length;j++){
-                        if (tmpClass.getInterfaces()[i].getName().toString().equals("Plugin")){
-                            classPlugins.add(tmpClass);
+                    clazz = Class.forName(string, true, loader);
+                    for (int j = 0; j < clazz.getInterfaces().length;j++){
+                        if (clazz.getInterfaces()[i].getName().toString().equals("plugins.LanguagePlugins")){
+                            classLanguagePlugins.add(clazz);
                         }
                     }
                 }

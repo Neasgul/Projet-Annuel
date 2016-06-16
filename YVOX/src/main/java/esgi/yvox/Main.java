@@ -41,6 +41,5 @@ public class Main extends Application{
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-        //PluginManager.getInstance();
     }
 }

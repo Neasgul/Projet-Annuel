@@ -68,7 +68,7 @@ public class MainScene_Controller{
 
     @FXML
     void onPluginClick(MouseEvent me) {
-        System.out.println("Open Plugins window"+me.getEventType().toString());
+        System.out.println("Open PluginsInfo window"+me.getEventType().toString());
         // TODO: 04/05/2016 Create a plugin window
     }
 
