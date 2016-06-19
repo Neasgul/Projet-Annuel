@@ -1,15 +1,18 @@
+<!DOCTYPE html>
 <html>
 <head>
-
+    <title>YVOX - Home</title>
+    <link rel='stylesheet' href='/css/style.css' />
 </head>
 <body>
-    <h1>YVOX</h1>
-    <form method="get" action="/download" method="post">
-        <input type="submit" value="Download YVOX"name="Download"></input>
-    </form>
+    <% include partials/Menu %>
+    <img src="logo.png" alt="yvox" />
     <div>
         <h3>Our project is about an application which help you to do some tasks like creating, deleting and executing program.
             The apps can send a mail you have dictated. And show a log of all orders given.</h3>
     </div>
 </body>
+<footer>
+    <% include partials/footer %>
+</footer>
 </html>

@@ -35,4 +35,15 @@ UserUtils.prototype.GetUserbyUUID = function (uuid_user,callback) {
     })
 };
 
+UserUtils.prototype.DeleteUser = function (uuid_user, callback) {
+    var User = models.User;
+    User.destroy({
+        where: {token:uuid_user}
+    }).then(function (result) {
+        callback(result);
+    }).catch(function (err) {
+        callback(undefined, err);
+    })
+};
+
 module.exports = new UserUtils;

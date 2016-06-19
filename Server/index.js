@@ -2,11 +2,15 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var favicon = require('serve-favicon');
 var fs = require('fs');
-
 var app = express();
+app.use(express.static(__dirname+'/public'));
+app.set('views',__dirname+'/views')
+//Define the port to use
 var DEFAULT_PORT = 8888;
 var port = process.env.PORT || DEFAULT_PORT
 
+//set the view engine to ejs
+app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
     "extended": false
 }));
@@ -20,21 +24,27 @@ require('./api/Command')(app);
 require('./api/User')(app);
 
 app.get('/',function (req, res) {
-    fs.readFile('Server/public/index.html',function (err, data){
-        res.writeHeader(200, {"Content-Type": "text/html"});
-        res.write(data);
-        res.end();
+    res.render('index');
     });
 
+app.get('/about',function (req, res) {
+    res.render('about');
+})
+
+app.get('/plugins',function (req, res) {
+    res.render('plugins');
 })
 app.get('/download',function (req, res) {
 var file = __dirname + '/Command.log';
   res.download(file); // Set disposition and send it.
 
 })
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  res.status(404).send('404 : Page Not Found')
+    res.render('404');
 });
 
 app.listen(port, function () {
