@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var fs = require('fs');
 var app = express();
 app.use(express.static(__dirname+'/public'));
-
+app.set('views',__dirname+'/views')
 //Define the port to use
 var DEFAULT_PORT = 8888;
 var port = process.env.PORT || DEFAULT_PORT
@@ -27,15 +27,24 @@ app.get('/',function (req, res) {
     res.render('index');
     });
 
+app.get('/about',function (req, res) {
+    res.render('about');
+})
+
+app.get('/plugins',function (req, res) {
+    res.render('plugins');
+})
 app.get('/download',function (req, res) {
 var file = __dirname + '/Command.log';
   res.download(file); // Set disposition and send it.
 
 })
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     res.render('404');
-    //res.status(404).send('404 : Page Not Found')
 });
 
 app.listen(port, function () {
