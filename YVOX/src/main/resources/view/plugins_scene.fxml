@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="esgi.yvox.controller.Plugins_Controller">
+   <children>
+      <AnchorPane prefHeight="80.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="home_button" alignment="BASELINE_RIGHT" layoutX="-29.0" layoutY="23.0" mnemonicParsing="false" onAction="#onHomeClick" prefHeight="51.0" prefWidth="87.0" style="-fx-background-color: #ff8c00; -fx-background-radius: 5em;" text="Accueil" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Calibri Bold" size="13.0" />
+               </font>
+            </Button>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="257.0" layoutY="37.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ffffff;" text="Plugins" textFill="DARKORANGE" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="37.0">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="historic_button" alignment="BASELINE_LEFT" layoutX="543.0" layoutY="23.0" mnemonicParsing="false" onAction="#onHistoriqueClick" prefHeight="51.0" prefWidth="103.0" style="-fx-background-color: #ff8c00; -fx-background-radius: 5em;" text="Historique" textAlignment="CENTER" textFill="#f5f5f5" AnchorPane.rightAnchor="-30.0">
+               <font>
+                  <Font name="Calibri Bold" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+         <children>
+            <ScrollPane fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+               <content>
+                  <GridPane fx:id="gp_Plugins">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="487.0" minWidth="10.0" prefWidth="455.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="143.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</VBox>

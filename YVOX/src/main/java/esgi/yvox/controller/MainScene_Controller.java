@@ -45,12 +45,12 @@ public class MainScene_Controller{
     @FXML
     private Button button_historic;
 
-
+    @FXML
+    private Button button_plugins;
 
     @FXML
     void onHistoriqueClick(ActionEvent event) {
         System.out.println("Open History window");
-        // TODO: 04/05/2016 Create a History window
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/historic_scene.fxml"));
             Parent hist_window = loader.load();
@@ -67,9 +67,19 @@ public class MainScene_Controller{
     }
 
     @FXML
-    void onPluginClick(MouseEvent me) {
-        System.out.println("Open PluginsInfo window"+me.getEventType().toString());
-        // TODO: 04/05/2016 Create a plugin window
+    void onPluginClick(ActionEvent event) {
+        System.out.println("Open Plugins window");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/plugins_scene.fxml"));
+            Parent home_window = loader.load();
+
+            Stage main_window = (Stage) button_plugins.getScene().getWindow();
+            Scene scene_historic = new Scene(home_window, main_window.getWidth(), main_window.getHeight());
+            main_window.setScene(scene_historic);
+            main_window.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @FXML

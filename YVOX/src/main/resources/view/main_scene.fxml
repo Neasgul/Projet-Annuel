@@ -20,7 +20,7 @@
       </Button>
    </left>
    <right>
-      <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onPluginClick" prefHeight="150.0" prefWidth="120.0" style="-fx-background-color: #ff8c00; -fx-background-radius: 5em;" text="Plugins" textAlignment="CENTER" textFill="#f5f5f5" BorderPane.alignment="CENTER">
+      <Button fx:id="button_plugins" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onPluginClick" prefHeight="150.0" prefWidth="120.0" style="-fx-background-color: #ff8c00; -fx-background-radius: 5em;" text="Plugins" textAlignment="CENTER" textFill="#f5f5f5" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets right="-50.0" />
          </BorderPane.margin>

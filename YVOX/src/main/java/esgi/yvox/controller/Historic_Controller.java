@@ -32,6 +32,9 @@ public class Historic_Controller {
     private Button button_home;
 
     @FXML
+    private Button plugins_button;
+
+    @FXML
     private GridPane gp_Historic;
 
     @FXML
@@ -48,6 +51,22 @@ public class Historic_Controller {
             Parent home_window = loader.load();
 
             Stage main_window = (Stage) button_home.getScene().getWindow();
+            Scene scene_historic = new Scene(home_window, main_window.getWidth(), main_window.getHeight());
+            main_window.setScene(scene_historic);
+            main_window.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void onPluginsClick(ActionEvent event){
+        System.out.println("Open Plugins window");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/plugins_scene.fxml"));
+            Parent home_window = loader.load();
+
+            Stage main_window = (Stage) plugins_button.getScene().getWindow();
             Scene scene_historic = new Scene(home_window, main_window.getWidth(), main_window.getHeight());
             main_window.setScene(scene_historic);
             main_window.show();
