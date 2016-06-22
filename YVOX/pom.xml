@@ -61,5 +61,12 @@
             <artifactId>sphinx4-data</artifactId>
             <version>5prealpha-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>Plugins_interface</groupId>
+            <artifactId>yvox.sdk</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../Plugins_Interface.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>

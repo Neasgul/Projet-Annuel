@@ -1,5 +1,6 @@
 package esgi.yvox.plugins;
 
+import esgi.yvox.sdk.*;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
