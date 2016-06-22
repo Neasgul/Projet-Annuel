@@ -2,6 +2,7 @@
 build
 out
 target
+Plugins
 token.txt
 node_modules
 .DS_Store
