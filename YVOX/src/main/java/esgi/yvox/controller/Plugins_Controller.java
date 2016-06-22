@@ -12,6 +12,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import static java.nio.file.StandardOpenOption.*;
@@ -56,14 +57,17 @@ public class Plugins_Controller {
     @FXML
     void onAddPlugin(ActionEvent event){
         System.out.println(System.getProperty("user.dir"));
+        File file = new File("Plugins");
+        file.mkdirs();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open file");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Jar Files", "*.jar"),
                 new FileChooser.ExtensionFilter("All Files", "*.*")); // All files just for test
         main_window = (Stage) add_plugin.getScene().getWindow();
         try {
-            Files.copy(fileChooser.showOpenDialog(main_window).toURI().toURL().openStream(),
-                    Paths.get(System.getProperty("user.dir"), "src/main/java/esgi/yvox/plugins"));
+            File jar = fileChooser.showOpenDialog(main_window);
+            Files.copy(jar.toURI().toURL().openStream(),
+                    Paths.get(System.getProperty("user.dir"), "Plugins/"+jar.getName()));
         } catch (FileAlreadyExistsException faex){
             info_addPlugin.setText("Le plugin est déjà installé");
             info_addPlugin.setVisible(true);
