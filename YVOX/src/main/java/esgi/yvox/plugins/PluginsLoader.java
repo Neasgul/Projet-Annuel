@@ -6,6 +6,7 @@ import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.jar.JarFile;
 
@@ -14,17 +15,24 @@ import java.util.jar.JarFile;
  */
 public class PluginsLoader {
 
-    private String[] files;
+    private ArrayList<String> files;
 
     private ArrayList classLanguagePlugins;
 
     public PluginsLoader(){
         classLanguagePlugins = new ArrayList();
+        files = new ArrayList<>();
     }
 
-    public PluginsLoader(String[] files) {
+    public PluginsLoader(ArrayList<String> files) {
         this();
         this.files = files;
+    }
+
+    public ArrayList<PluginsInfo> loadAllPlugins() throws Exception {
+        ArrayList<PluginsInfo> pluginsInfos = new ArrayList<>();
+        Collections.addAll(pluginsInfos, loadAllLanguagePlugins());
+        return pluginsInfos;
     }
 
     public LanguagePlugins[] loadAllLanguagePlugins() throws Exception {
@@ -40,11 +48,11 @@ public class PluginsLoader {
         return langPlugins;
     }
 
-    public String[] getFiles() {
+    public ArrayList<String> getFiles() {
         return files;
     }
 
-    public void setFiles(String[] files) {
+    public void setFiles(ArrayList<String> files) {
         this.files = files;
     }
 
@@ -53,14 +61,14 @@ public class PluginsLoader {
             throw new Exception("File not defined");
         }
 
-        Path[] f = new Path[files.length];
+        Path[] f = new Path[files.size()];
         URLClassLoader loader;
         String string = "";
         Enumeration enumeration;
         Class clazz = null;
 
         for (int i = 0; i < f.length;i++){
-            f[i] = Paths.get(files[i]);
+            f[i] = Paths.get(files.get(i));
             if (f[i] == null){
                 break;
             }

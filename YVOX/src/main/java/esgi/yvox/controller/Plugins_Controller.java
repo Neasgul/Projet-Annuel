@@ -17,10 +17,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import static java.nio.file.StandardOpenOption.*;
 
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by ostro on 19/06/2016.
@@ -56,7 +55,6 @@ public class Plugins_Controller {
 
     @FXML
     void onAddPlugin(ActionEvent event){
-        System.out.println(System.getProperty("user.dir"));
         File file = new File("Plugins");
         file.mkdirs();
         FileChooser fileChooser = new FileChooser();
@@ -79,7 +77,33 @@ public class Plugins_Controller {
     @FXML
     void initialize(){ getPlugins();}
 
+    ArrayList<String> getFiles(){
+        ArrayList<String> files = new ArrayList<>();
+        Path pathDir = Paths.get(System.getProperty("user.dir") + "Plugins/");
+        try{
+            DirectoryStream<Path> dirStr = Files.newDirectoryStream(pathDir);
+            Iterator<Path> itrDir = dirStr.iterator();
+            while (itrDir.hasNext()){
+                Path pathFile = itrDir.next();
+                if (pathFile.toString().substring(pathFile.toString().indexOf(".jar")).equals(".jar")){
+                    files.add(pathFile.toString());
+                }
+            }
+        }catch (IOException ioEx){
+            ioEx.printStackTrace();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            return files;
+        }
+    }
+
     void getPlugins(){
+        ArrayList<String> files = getFiles();
+        if (files.size() == 0){
+            // TODO
+            return;
+        }
 
     }
 }
