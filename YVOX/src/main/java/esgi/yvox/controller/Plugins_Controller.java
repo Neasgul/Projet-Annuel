@@ -1,13 +1,22 @@
 package esgi.yvox.controller;
 
 import edu.cmu.sphinx.linguist.acoustic.tiedstate.HTK.Lab;
+import esgi.yvox.plugins.PluginsLoader;
+import esgi.yvox.sdk.PluginsInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -35,6 +44,9 @@ public class Plugins_Controller {
     @FXML
     private Label info_addPlugin;
 
+    @FXML
+    private Accordion plugins_accordion;
+
     private Stage main_window;
 
     @FXML
@@ -59,13 +71,13 @@ public class Plugins_Controller {
         file.mkdirs();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open file");
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Jar Files", "*.jar"),
-                new FileChooser.ExtensionFilter("All Files", "*.*")); // All files just for test
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Jar Files", "*.jar"));
         main_window = (Stage) add_plugin.getScene().getWindow();
         try {
             File jar = fileChooser.showOpenDialog(main_window);
             Files.copy(jar.toURI().toURL().openStream(),
                     Paths.get(System.getProperty("user.dir"), "Plugins/"+jar.getName()));
+            getPlugins();
         } catch (FileAlreadyExistsException faex){
             info_addPlugin.setText("Le plugin est déjà installé");
             info_addPlugin.setVisible(true);
@@ -79,13 +91,13 @@ public class Plugins_Controller {
 
     ArrayList<String> getFiles(){
         ArrayList<String> files = new ArrayList<>();
-        Path pathDir = Paths.get(System.getProperty("user.dir") + "Plugins/");
+        Path pathDir = Paths.get(System.getProperty("user.dir") + "/Plugins/");
         try{
             DirectoryStream<Path> dirStr = Files.newDirectoryStream(pathDir);
             Iterator<Path> itrDir = dirStr.iterator();
             while (itrDir.hasNext()){
                 Path pathFile = itrDir.next();
-                if (pathFile.toString().substring(pathFile.toString().indexOf(".jar")).equals(".jar")){
+                if (pathFile.toString().substring(pathFile.toString().indexOf(".jar")).compareTo(".jar") == 0){
                     files.add(pathFile.toString());
                 }
             }
@@ -105,5 +117,29 @@ public class Plugins_Controller {
             return;
         }
 
+        PluginsLoader plugLoader = new PluginsLoader(files);
+        try {
+            ArrayList<PluginsInfo> allPlugins = plugLoader.loadAllPlugins();
+            for (int i = 0; i < allPlugins.size(); i++) {
+                BorderPane plugin_details = new BorderPane();
+                Label plugin_description = new Label("Description :\n" + allPlugins.get(i).getDescription());
+                Label plugin_version = new Label("Version :\n" + allPlugins.get(i).getVersion());
+                Label plugin_author = new Label("Author : " + allPlugins.get(i).getAuthor());
+                //Button plugin_delete = new Button("Delete");
+                //plugin_details.setAlignment(plugin_delete, Pos.CENTER);
+                plugin_description.setWrapText(true);
+                plugin_description.setTextAlignment(TextAlignment.JUSTIFY);
+                plugin_details.setAlignment(plugin_version, Pos.CENTER);
+                plugin_details.setAlignment(plugin_author, Pos.CENTER);
+                //plugin_details.setLeft(plugin_delete);
+                plugin_details.setCenter(plugin_description);
+                plugin_details.setRight(plugin_version);
+                plugin_details.setBottom(plugin_author);
+                TitledPane plugin_title = new TitledPane(allPlugins.get(i).getName(), plugin_details);
+                plugins_accordion.getPanes().add(plugin_title);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 }

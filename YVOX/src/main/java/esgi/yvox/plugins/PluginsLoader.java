@@ -1,6 +1,9 @@
 package esgi.yvox.plugins;
 
+import esgi.yvox.annotation.UUID_Processor;
 import esgi.yvox.sdk.*;
+
+import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
@@ -8,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.jar.JarFile;
 
 /**
@@ -17,7 +21,7 @@ public class PluginsLoader {
 
     private ArrayList<String> files;
 
-    private ArrayList classLanguagePlugins;
+    private ArrayList<Class> classLanguagePlugins;
 
     public PluginsLoader(){
         classLanguagePlugins = new ArrayList();
@@ -31,7 +35,10 @@ public class PluginsLoader {
 
     public ArrayList<PluginsInfo> loadAllPlugins() throws Exception {
         ArrayList<PluginsInfo> pluginsInfos = new ArrayList<>();
-        Collections.addAll(pluginsInfos, loadAllLanguagePlugins());
+        LanguagePlugins[] langagePlug = loadAllLanguagePlugins();
+        for (int i = 0; i < langagePlug.length; i++) {
+            pluginsInfos.add(langagePlug[i]);
+        }
         return pluginsInfos;
     }
 
@@ -42,7 +49,7 @@ public class PluginsLoader {
         LanguagePlugins[] langPlugins = new LanguagePlugins[classLanguagePlugins.size()];
 
         for (int i = 0;i < langPlugins.length;i++){
-            langPlugins[i] = (LanguagePlugins) ((Class) classLanguagePlugins.get(i)).newInstance();
+            langPlugins[i] = (LanguagePlugins) classLanguagePlugins.get(i).newInstance();
         }
 
         return langPlugins;
@@ -80,14 +87,20 @@ public class PluginsLoader {
             while (enumeration.hasMoreElements()){
                 string = enumeration.nextElement().toString();
 
-                if (string.substring(string.length()-6).compareTo(".class") == 0){
-                    string = string.substring(string.length()-6);
+                if (string.length() > 5 && string.substring(string.length()-6).compareTo(".class") == 0){
+                    string = string.substring(0, string.length()-6);
                     string = string.replaceAll("/",".");
 
                     clazz = Class.forName(string, true, loader);
-                    for (int j = 0; j < clazz.getInterfaces().length;j++){
-                        if (clazz.getInterfaces()[i].getName().toString().equals("plugins.LanguagePlugins")){
-                            classLanguagePlugins.add(clazz);
+                    Annotation[] clazzAnnotations  = clazz.getAnnotations();
+                    System.out.println(clazzAnnotations.length);
+                    for (int k = 0; k < clazzAnnotations.length; k++) {
+                        if (clazzAnnotations[k].toString().contains("YVOXPlugin")) {
+                            for (int j = 0; j < clazz.getInterfaces().length; j++) {
+                                if (clazz.getInterfaces()[j].getName().toString().equals("esgi.yvox.sdk.LanguagePlugins")) {
+                                    classLanguagePlugins.add(clazz);
+                                }
+                            }
                         }
                     }
                 }
