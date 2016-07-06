@@ -53,6 +53,11 @@ public class Sphinx_Thread extends Task{
             if (command_manager.isCommandStop(result))
             {
                 break;
+            }else {
+                Command current = command_manager.determindeCommand(result);
+                if(current!=null) {
+                    command_manager.executeCommand(current);
+                }
             }
         }
         System.out.println("thread stoping");
