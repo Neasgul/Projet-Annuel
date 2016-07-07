@@ -8,10 +8,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Iterator;
+import java.util.*;
 import java.util.jar.JarFile;
 
 /**
@@ -23,14 +20,21 @@ public class PluginsLoader {
 
     private ArrayList<Class> classLanguagePlugins;
 
+    private HashMap pluginNameJar;
+
     public PluginsLoader(){
         classLanguagePlugins = new ArrayList();
         files = new ArrayList<>();
+        pluginNameJar = new HashMap();
     }
 
     public PluginsLoader(ArrayList<String> files) {
         this();
         this.files = files;
+    }
+
+    public HashMap getPluginNameJar(){
+        return pluginNameJar;
     }
 
     public ArrayList<PluginsInfo> loadAllPlugins() throws Exception {
@@ -82,6 +86,7 @@ public class PluginsLoader {
 
             loader = new URLClassLoader(new URL[]{f[i].toUri().toURL()});
             JarFile jarFile = new JarFile(String.valueOf(f[i].toAbsolutePath()));
+            String nameJarFile = jarFile.getName().split("\\\\")[jarFile.getName().split("\\\\").length-1];
             enumeration = jarFile.entries(); // Get content of jar
 
             while (enumeration.hasMoreElements()){
@@ -93,18 +98,20 @@ public class PluginsLoader {
 
                     clazz = Class.forName(string, true, loader);
                     Annotation[] clazzAnnotations  = clazz.getAnnotations();
-                    System.out.println(clazzAnnotations.length);
                     for (int k = 0; k < clazzAnnotations.length; k++) {
                         if (clazzAnnotations[k].toString().contains("YVOXPlugin")) {
                             for (int j = 0; j < clazz.getInterfaces().length; j++) {
                                 if (clazz.getInterfaces()[j].getName().toString().equals("esgi.yvox.sdk.LanguagePlugins")) {
                                     classLanguagePlugins.add(clazz);
+                                    pluginNameJar.put(((LanguagePlugins) clazz.newInstance()).getName(),nameJarFile);
                                 }
                             }
                         }
                     }
                 }
             }
+            jarFile.close();
+            loader.close();
         }
     }
 }
