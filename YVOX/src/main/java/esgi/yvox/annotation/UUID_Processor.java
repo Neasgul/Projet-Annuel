@@ -1,5 +1,7 @@
 package esgi.yvox.annotation;
 
+import esgi.yvox.Config;
+
 import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedArrayType;
@@ -46,7 +48,7 @@ public class UUID_Processor {
         HttpURLConnection uuid_connection = null;
         try{
             // Request send
-            URL uuid_url = new URL("http://localhost:8888/user/add");
+            URL uuid_url = new URL(Config.getServer_Address());
             uuid_connection = (HttpURLConnection) uuid_url.openConnection();
             uuid_connection.setRequestMethod("POST");
 
