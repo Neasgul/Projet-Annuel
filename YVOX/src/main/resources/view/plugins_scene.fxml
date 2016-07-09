@@ -25,16 +25,21 @@
                   <Font name="Calibri Bold" size="13.0" />
                </font>
             </Button>
-            <Label fx:id="info_addPlugin" alignment="CENTER" contentDisplay="CENTER" layoutX="473.0" layoutY="66.0" prefHeight="17.0" text="Label" visible="false" AnchorPane.rightAnchor="15.0" />
+            <Label fx:id="info_Plugin" alignment="CENTER" contentDisplay="CENTER" layoutX="473.0" layoutY="66.0" prefHeight="17.0" text="Label" visible="false" AnchorPane.rightAnchor="15.0" />
          </children>
       </AnchorPane>
       <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
          <children>
-            <ScrollPane fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+            <ScrollPane fx:id="sc_plugins" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                <content>
                   <Accordion fx:id="plugins_accordion" />
                </content>
             </ScrollPane>
+            <Label fx:id="label_noPlugins" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="DARKORANGE" visible="false" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Calibri" size="30.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

@@ -1,35 +1,23 @@
 package esgi.yvox.controller;
 
-import edu.cmu.sphinx.linguist.acoustic.tiedstate.HTK.Lab;
 import esgi.yvox.exception.PluginException;
 import esgi.yvox.plugins.PluginsLoader;
 import esgi.yvox.sdk.PluginsInfo;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TitledPane;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-import static java.nio.file.StandardOpenOption.*;
-
 import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -52,14 +40,18 @@ public class Plugins_Controller {
     private Button add_plugin;
 
     @FXML
-    private Label info_addPlugin;
+    private Label info_Plugin;
 
     @FXML
     private Accordion plugins_accordion;
 
-    private Stage main_window;
+    @FXML
+    private Label label_noPlugins;
 
-    private String namePlugin;
+    @FXML
+    private ScrollPane sc_plugins;
+
+    private Stage main_window;
 
     @FXML
     void onHomeClick(ActionEvent event) {
@@ -119,15 +111,19 @@ public class Plugins_Controller {
             if (flag == false) {
                 throw new PluginException("This file isn't a valid plugin !");
             }else{
-                info_addPlugin.setText("The plugin has been added !");
-                info_addPlugin.setVisible(true);
+                info_Plugin.setText("The plugin has been added !");
+                info_Plugin.setVisible(true);
+                if (label_noPlugins.isVisible()){
+                    label_noPlugins.setVisible(false);
+                    sc_plugins.setVisible(true);
+                }
             }
         } catch (PluginException ex) {
-            info_addPlugin.setText(ex.getMessage());
-            info_addPlugin.setVisible(true);
+            info_Plugin.setText(ex.getMessage());
+            info_Plugin.setVisible(true);
         } catch (FileAlreadyExistsException faex){
-            info_addPlugin.setText("This plugin is already installed !");
-            info_addPlugin.setVisible(true);
+            info_Plugin.setText("This plugin is already installed !");
+            info_Plugin.setVisible(true);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -161,12 +157,14 @@ public class Plugins_Controller {
     }
 
     void getPlugins(){
+        plugins_accordion.getPanes().clear();
         ArrayList<String> files = getFiles();
         if (files.size() == 0){
-            // TODO
+            sc_plugins.setVisible(false);
+            label_noPlugins.setText("No Plugin detected");
+            label_noPlugins.setVisible(true);
             return;
         }
-        plugins_accordion.getPanes().clear();
         PluginsLoader plugLoader = new PluginsLoader(files);
         try {
             ArrayList<PluginsInfo> allPlugins = plugLoader.loadAllPlugins();
@@ -182,6 +180,8 @@ public class Plugins_Controller {
                         HashMap jars = plugLoader.getPluginNameJar();
                         Path jarPath = Paths.get(System.getProperty("user.dir") + "/Plugins/" + jars.get(allPlugins.get(finalI).getName()));
                         Files.delete(jarPath);
+                        info_Plugin.setText("The plugin has been deleted !");
+                        info_Plugin.setVisible(true);
                         getPlugins();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -197,6 +197,7 @@ public class Plugins_Controller {
                 plugin_details.setRight(plugin_version);
                 plugin_details.setBottom(plugin_author);
                 plugin_details.setMargin(plugin_delete, new Insets(10));
+                plugin_details.setMaxHeight(Double.MAX_VALUE);
                 TitledPane plugin_title = new TitledPane(allPlugins.get(i).getName(), plugin_details);
                 plugins_accordion.getPanes().add(plugin_title);
             }
