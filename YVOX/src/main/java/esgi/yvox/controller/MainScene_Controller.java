@@ -2,6 +2,9 @@ package esgi.yvox.controller;
 
 import esgi.yvox.Sphinx_Controller;
 import esgi.yvox.Sphinx_Request;
+import esgi.yvox.plugins.PluginsLoader;
+import esgi.yvox.sdk.LanguagePlugins;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,11 +14,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -92,6 +97,7 @@ public class MainScene_Controller{
         assert img_top_logo != null : "fx:id=\"img_top_logo\" was not injected: check your FXML file 'main_scene.fxml'.";
         System.out.println("Main Scene initialize");
         result.setText("Recognition not started");
+        loadLanguage();
 
         mic.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -105,5 +111,20 @@ public class MainScene_Controller{
 
     public void setResultText(String text){
         result.setText(text);
+    }
+
+    public void loadLanguage(){
+        PluginsLoader pluginsLoader = new PluginsLoader();
+
+        try{
+            LanguagePlugins[] languagePlugins = pluginsLoader.loadAllLanguagePlugins();
+            for (int i = 0; i < languagePlugins.length; i++) {
+                System.out.println("Name : " + languagePlugins[i].getName());
+                cb_Language.getItems().add(languagePlugins[i].getName());
+            }
+            cb_Language.setTooltip(new Tooltip("Select the language"));
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 }

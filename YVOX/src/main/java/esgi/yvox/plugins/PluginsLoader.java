@@ -3,9 +3,12 @@ package esgi.yvox.plugins;
 import esgi.yvox.annotation.UUID_Processor;
 import esgi.yvox.sdk.*;
 
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -24,13 +27,8 @@ public class PluginsLoader {
 
     public PluginsLoader(){
         classLanguagePlugins = new ArrayList();
-        files = new ArrayList<>();
+        getFiles();
         pluginNameJar = new HashMap();
-    }
-
-    public PluginsLoader(ArrayList<String> files) {
-        this();
-        this.files = files;
     }
 
     public HashMap getPluginNameJar(){
@@ -59,8 +57,26 @@ public class PluginsLoader {
         return langPlugins;
     }
 
-    public ArrayList<String> getFiles() {
-        return files;
+    public ArrayList<String> getFiles(){
+        files = new ArrayList<>();
+        Path pathDir = Paths.get(System.getProperty("user.dir") + "/Plugins/");
+        try{
+            DirectoryStream<Path> dirStr = Files.newDirectoryStream(pathDir);
+            Iterator<Path> itrDir = dirStr.iterator();
+            while (itrDir.hasNext()){
+                Path pathFile = itrDir.next();
+                if (pathFile.toString().substring(pathFile.toString().indexOf(".jar")).compareTo(".jar") == 0){
+                    this.files.add(pathFile.toString());
+                }
+            }
+            dirStr.close();
+        }catch (IOException ioEx){
+            ioEx.printStackTrace();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            return this.files;
+        }
     }
 
     public void setFiles(ArrayList<String> files) {

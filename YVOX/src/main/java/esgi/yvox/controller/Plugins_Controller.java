@@ -134,38 +134,17 @@ public class Plugins_Controller {
     @FXML
     void initialize(){ getPlugins();}
 
-    ArrayList<String> getFiles(){
-        ArrayList<String> files = new ArrayList<>();
-        Path pathDir = Paths.get(System.getProperty("user.dir") + "/Plugins/");
-        try{
-            DirectoryStream<Path> dirStr = Files.newDirectoryStream(pathDir);
-            Iterator<Path> itrDir = dirStr.iterator();
-            while (itrDir.hasNext()){
-                Path pathFile = itrDir.next();
-                if (pathFile.toString().substring(pathFile.toString().indexOf(".jar")).compareTo(".jar") == 0){
-                    files.add(pathFile.toString());
-                }
-            }
-            dirStr.close();
-        }catch (IOException ioEx){
-            ioEx.printStackTrace();
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }finally {
-            return files;
-        }
-    }
-
     void getPlugins(){
         plugins_accordion.getPanes().clear();
-        ArrayList<String> files = getFiles();
+        PluginsLoader plugLoader = new PluginsLoader();
+        ArrayList<String> files = plugLoader.getFiles();
+
         if (files.size() == 0){
             sc_plugins.setVisible(false);
             label_noPlugins.setText("No Plugin detected");
             label_noPlugins.setVisible(true);
             return;
         }
-        PluginsLoader plugLoader = new PluginsLoader(files);
         try {
             ArrayList<PluginsInfo> allPlugins = plugLoader.loadAllPlugins();
             for (int i = 0; i < allPlugins.size(); i++) {
