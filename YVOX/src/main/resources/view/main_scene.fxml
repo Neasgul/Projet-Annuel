@@ -36,10 +36,20 @@
          </image></ImageView>
    </center>
    <top>
-      <ImageView fx:id="img_top_logo" fitHeight="94.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@../img/logo_icone.png" />
-         </image></ImageView>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <ImageView fx:id="img_top_logo" fitHeight="94.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/logo_icone.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <ChoiceBox fx:id="cb_Language" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+         </children>
+      </AnchorPane>
    </top>
    <bottom>
       <Label fx:id="result" BorderPane.alignment="CENTER" />

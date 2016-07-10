@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -47,6 +48,9 @@ public class MainScene_Controller{
 
     @FXML
     private Button button_plugins;
+
+    @FXML
+    private ChoiceBox cb_Language;
 
     @FXML
     void onHistoriqueClick(ActionEvent event) {
