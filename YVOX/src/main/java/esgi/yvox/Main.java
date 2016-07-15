@@ -2,6 +2,7 @@ package esgi.yvox;
 
 import esgi.yvox.annotation.UUID;
 import esgi.yvox.annotation.UUID_Processor;
+import esgi.yvox.controller.MainScene_Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -19,6 +20,8 @@ import java.io.LineNumberReader;
  */
 public class Main extends Application{
 
+    public static String ChoiceBoxValue = "";
+
     @UUID
     public static void main(String[] args) {
         UUID_Processor uuid_processor = new UUID_Processor(Main.class);
@@ -30,6 +33,8 @@ public class Main extends Application{
         User_UUID.readUUID();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main_scene.fxml"));
         Parent main_sc = loader.load();
+        MainScene_Controller ms_Controller = loader.getController();
+        ChoiceBoxValue = (String) ms_Controller.getChoiceBoxValue();
         stage.setTitle("YVOX Voice Controller");
         stage.getIcons().add(new Image("file:img/logo_icone.png"));
 

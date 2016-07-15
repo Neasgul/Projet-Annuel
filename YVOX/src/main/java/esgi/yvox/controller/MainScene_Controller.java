@@ -1,9 +1,12 @@
 package esgi.yvox.controller;
 
+import esgi.yvox.Main;
 import esgi.yvox.Sphinx_Controller;
 import esgi.yvox.Sphinx_Request;
 import esgi.yvox.plugins.PluginsLoader;
 import esgi.yvox.sdk.LanguagePlugins;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -109,6 +112,8 @@ public class MainScene_Controller{
 
     }
 
+    public Object getChoiceBoxValue(){ return cb_Language.getValue();}
+
     public void setResultText(String text){
         result.setText(text);
     }
@@ -119,10 +124,16 @@ public class MainScene_Controller{
         try{
             LanguagePlugins[] languagePlugins = pluginsLoader.loadAllLanguagePlugins();
             for (int i = 0; i < languagePlugins.length; i++) {
-                System.out.println("Name : " + languagePlugins[i].getName());
                 cb_Language.getItems().add(languagePlugins[i].getName());
             }
             cb_Language.setTooltip(new Tooltip("Select the language"));
+            cb_Language.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                    Main.ChoiceBoxValue = (String) cb_Language.getItems().get(newValue.intValue());
+                    System.out.println("Change : " + Main.ChoiceBoxValue);
+                }
+            });
         }catch (Exception ex){
             ex.printStackTrace();
         }
