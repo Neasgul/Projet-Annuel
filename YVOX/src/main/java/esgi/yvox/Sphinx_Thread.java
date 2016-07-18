@@ -2,6 +2,9 @@ package esgi.yvox;
 
 import edu.cmu.sphinx.api.Configuration;
 import edu.cmu.sphinx.api.LiveSpeechRecognizer;
+import esgi.yvox.controller.MainScene_Controller;
+import esgi.yvox.plugins.PluginsLoader;
+import esgi.yvox.sdk.LanguagePlugins;
 import javafx.concurrent.Task;
 
 import java.io.IOException;
@@ -15,6 +18,7 @@ public class Sphinx_Thread extends Task{
     private static Configuration mConfiguration;
     private static LiveSpeechRecognizer lmRecognizer;
     private static Sphinx_Controller parent;
+    private LanguagePlugins usedLanguage;
 
     public Sphinx_Thread(Sphinx_Controller controller,SphinxEvent event) {
         this.sphinx_callback = event;
@@ -23,6 +27,19 @@ public class Sphinx_Thread extends Task{
 
     void initialization() {
         System.out.println("thread Initiazation");
+        PluginsLoader pluginsLoader = new PluginsLoader();
+        try {
+            LanguagePlugins[] allLanguagePlugins = pluginsLoader.loadAllLanguagePlugins();
+            for (int i = 0; i < allLanguagePlugins.length; i++) {
+                if (allLanguagePlugins[i].getName().compareTo(Main.ChoiceBoxValue) == 0){
+                    usedLanguage = allLanguagePlugins[i];
+                    break;
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
         mConfiguration = new Configuration();
 
         mConfiguration.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");

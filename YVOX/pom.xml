@@ -75,5 +75,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>Plugins_interface</groupId>
+            <artifactId>yvox.sdk</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../Plugins_Interface.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>
