@@ -51,4 +51,20 @@ CommandUtils.prototype.GetCommandbyLevel = function (uuid_user, level, callback)
     })
 };
 
+CommandUtils.prototype.CheckUUID = function (uuid) {
+    var command = models.Command;
+    command.findAll({
+        where: {
+            uuid_user : uuid
+        }
+    }).then(function (result){
+        if (result) {
+            return true;
+        }
+        return false
+    }).catch(function (err) {
+        return false
+    })
+};
+
 module.exports = new CommandUtils;
