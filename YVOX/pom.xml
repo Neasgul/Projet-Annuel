@@ -6,7 +6,7 @@
 
     <groupId>esgi.yvox</groupId>
     <artifactId>YVOX</artifactId>
-    <version>0.2</version>
+    <version>0.5</version>
     <build>
         <plugins>
             <plugin>
@@ -23,6 +23,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
+                    <outputDirectory>${basedir}</outputDirectory>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
@@ -61,6 +62,19 @@
             <artifactId>sphinx4-data</artifactId>
             <version>5prealpha-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
+        </dependency>
+        <!-- http://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>Plugins_interface</groupId>
             <artifactId>yvox.sdk</artifactId>

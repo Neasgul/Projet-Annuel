@@ -1,6 +1,10 @@
 package esgi.yvox.annotation;
 
+import esgi.yvox.Config;
+
 import java.io.*;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedArrayType;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.*;
@@ -12,29 +16,31 @@ import java.util.UUID;
  */
 public class UUID_Processor {
     public UUID_Processor(Class clazz) {
-        String cur_dir = System.getProperty("user.dir");
-        Path path = Paths.get(cur_dir);
-        try{
-            DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path);
-            Iterator<Path> iterator = directoryStream.iterator();
-            int count = 0;
-            while (iterator.hasNext()){
-                Path path1 = iterator.next();
-                if(path1.endsWith("token.txt")){
-                    count++;
-                    break;
+        if(!clazz.isAnnotationPresent(esgi.yvox.annotation.UUID.class)){
+            String cur_dir = System.getProperty("user.dir");
+            Path path = Paths.get(cur_dir);
+            try{
+                DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path);
+                Iterator<Path> iterator = directoryStream.iterator();
+                int count = 0;
+                while (iterator.hasNext()){
+                    Path path1 = iterator.next();
+                    if(path1.endsWith("token.txt")){
+                        count++;
+                        break;
+                    }
                 }
+                directoryStream.close();
+                if (count == 0) {
+                    UUID uuid = UUID.randomUUID();
+                    FileWriter fw = new FileWriter("token.txt");
+                    fw.write(uuid.toString());
+                    fw.close();
+                    sendNewUser(uuid.toString());
+                }
+            }catch (Exception ex){
+                ex.printStackTrace();
             }
-            directoryStream.close();
-            if (count == 0) {
-                UUID uuid = UUID.randomUUID();
-                FileWriter fw = new FileWriter("token.txt");
-                fw.write(uuid.toString());
-                fw.close();
-                sendNewUser(uuid.toString());
-            }
-        }catch (Exception ex){
-            ex.printStackTrace();
         }
     }
 
@@ -42,7 +48,7 @@ public class UUID_Processor {
         HttpURLConnection uuid_connection = null;
         try{
             // Request send
-            URL uuid_url = new URL("http://localhost:8888/user/add");
+            URL uuid_url = new URL(Config.getServer_Address());
             uuid_connection = (HttpURLConnection) uuid_url.openConnection();
             uuid_connection.setRequestMethod("POST");
 

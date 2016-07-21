@@ -36,7 +36,7 @@ public class Main extends Application{
         MainScene_Controller ms_Controller = loader.getController();
         ChoiceBoxValue = (String) ms_Controller.getChoiceBoxValue();
         stage.setTitle("YVOX Voice Controller");
-        stage.getIcons().add(new Image("file:img/logo_icone.png"));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/logo_icone_transparent.png")));
 
         Rectangle2D mainscreen = Screen.getPrimary().getVisualBounds();
         stage.setWidth(mainscreen.getWidth() * 0.5);
