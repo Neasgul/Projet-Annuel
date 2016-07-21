@@ -42,9 +42,12 @@ public class Sphinx_Thread extends Task{
 
         mConfiguration = new Configuration();
 
-        mConfiguration.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
-        mConfiguration.setDictionaryPath("resource:/edu/cmu/sphinx/models/en-us/cmudict-en-us.dict");
-        mConfiguration.setLanguageModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us.lm.bin");
+        //mConfiguration.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
+        //mConfiguration.setDictionaryPath("resource:/edu/cmu/sphinx/models/en-us/cmudict-en-us.dict");
+        //mConfiguration.setLanguageModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us.lm.bin");
+        mConfiguration.setAcousticModelPath(usedLanguage.getAcousticModelPath());
+        mConfiguration.setDictionaryPath(usedLanguage.getDictionaryPath());
+        mConfiguration.setLanguageModelPath(usedLanguage.getLanguageModelPath());
 
         try {
             lmRecognizer = new LiveSpeechRecognizer(mConfiguration);
