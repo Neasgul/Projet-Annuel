@@ -1,5 +1,6 @@
 package esgi.yvox.sdk;
 
+
 import java.util.ArrayList;
 
 /**
@@ -7,5 +8,14 @@ import java.util.ArrayList;
  */
 public interface LanguagePlugins extends PluginsInfo {
 
-    ArrayList<String> addLanguage();
+    ArrayList<String> StopKeyWordList();
+    ArrayList<String> ExecuteKeyWordList();
+    ArrayList<String> CreateKeyWordList();
+    ArrayList<String> DeleteKeyWordList();
+
+    String getAcousticModelPath();
+    String getDictionaryPath();
+    String getLanguageModelPath();
+
+
 }
