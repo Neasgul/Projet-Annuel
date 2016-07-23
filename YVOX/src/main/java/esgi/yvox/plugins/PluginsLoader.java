@@ -65,7 +65,7 @@ public class PluginsLoader {
             Iterator<Path> itrDir = dirStr.iterator();
             while (itrDir.hasNext()){
                 Path pathFile = itrDir.next();
-                if (pathFile.toString().substring(pathFile.toString().indexOf(".jar")).compareTo(".jar") == 0){
+                if (pathFile.toString().substring(pathFile.toString().length()-4).compareTo(".jar") == 0){
                     this.files.add(pathFile.toString());
                 }
             }
