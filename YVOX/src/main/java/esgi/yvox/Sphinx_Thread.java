@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class Sphinx_Thread extends Task{
     private SphinxEvent sphinx_callback;
-
+    private Command_Manager command_manager;
     private static Configuration mConfiguration;
     private static LiveSpeechRecognizer lmRecognizer;
     private static Sphinx_Controller parent;
@@ -41,13 +41,10 @@ public class Sphinx_Thread extends Task{
         }
 
         mConfiguration = new Configuration();
-
-        //mConfiguration.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
-        //mConfiguration.setDictionaryPath("resource:/edu/cmu/sphinx/models/en-us/cmudict-en-us.dict");
-        //mConfiguration.setLanguageModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us.lm.bin");
         mConfiguration.setAcousticModelPath(usedLanguage.getAcousticModelPath());
         mConfiguration.setDictionaryPath(usedLanguage.getDictionaryPath());
         mConfiguration.setLanguageModelPath(usedLanguage.getLanguageModelPath());
+        command_manager = new Command_Manager();
 
         try {
             lmRecognizer = new LiveSpeechRecognizer(mConfiguration);
@@ -70,9 +67,14 @@ public class Sphinx_Thread extends Task{
             //sphinx_callback.onResult(result);
             updateMessage(result);
             System.out.println(result);
-            if (result.equals("exit") || result.equals("stop") || result.equals("cancel"))
+            if (command_manager.isCommandStop(result))
             {
                 break;
+            }else {
+                Command current = command_manager.determindeCommand(result);
+                if(current!=null) {
+                    command_manager.executeCommand(current);
+                }
             }
         }
         System.out.println("thread stoping");
