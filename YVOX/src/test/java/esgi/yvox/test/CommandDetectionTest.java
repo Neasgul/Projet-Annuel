@@ -5,6 +5,8 @@ import esgi.yvox.Command_Manager;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 
 /**
@@ -18,7 +20,7 @@ public class CommandDetectionTest {
     @Before
     public void SetUp(){
 
-        command_manager = new Command_Manager();
+        command_manager = new Command_Manager(new HashMap());
     }
     @Test
     public void testCreationCommand(){
