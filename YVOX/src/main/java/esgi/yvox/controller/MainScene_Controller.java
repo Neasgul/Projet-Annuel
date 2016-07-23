@@ -12,6 +12,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,6 +22,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -104,9 +110,27 @@ public class MainScene_Controller{
 
         mic.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                // TODO: 04/05/2016 implement it
-                sphinx_request.onRecognitionRequest();
-                result.textProperty().bind(Sphinx_Controller.getInstance().getTask().messageProperty());
+                if (Main.ChoiceBoxValue != null) {
+                    sphinx_request.onRecognitionRequest();
+                    result.textProperty().bind(Sphinx_Controller.getInstance().getTask().messageProperty());
+                }else {
+                    Stage secondaryStage = new Stage();
+                    BorderPane root = new BorderPane();
+                    Button exit = new Button("Ok");
+                    exit.setOnAction(event1 -> {
+                        secondaryStage.close();
+                    });
+                    Label text = new Label("Select a language");
+                    text.setTextAlignment(TextAlignment.CENTER);
+                    root.setAlignment(exit, Pos.CENTER);
+                    root.setCenter(text);
+                    root.setBottom(exit);
+                    root.setPadding(new Insets(0,0,5,0));
+                    Scene popup = new Scene(root, 300, 75);
+                    secondaryStage.setScene(popup);
+                    secondaryStage.setTitle("No language found");
+                    secondaryStage.showAndWait();
+                }
             }
         });
 
