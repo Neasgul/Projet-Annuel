@@ -16,8 +16,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -27,6 +26,8 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * Created by ostro on 19/06/2016.
@@ -75,52 +76,12 @@ public class Plugins_Controller {
         file.mkdirs();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open file");
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Jar Files", "*.jar"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Zip Files", "*.zip"));
         main_window = (Stage) add_plugin.getScene().getWindow();
         try {
-            File jar = fileChooser.showOpenDialog(main_window);
-            URL fileUrl = jar.toURI().toURL();
-            URLClassLoader loader = new URLClassLoader(new URL[]{fileUrl});
-            JarFile jarFile = new JarFile(jar);
-            Enumeration enumeration = jarFile.entries();
-            boolean flag = false;
-
-            outofloop:
-            while (enumeration.hasMoreElements()) {
-                String string = enumeration.nextElement().toString();
-
-                if (string.length() > 5 && string.substring(string.length() - 6).compareTo(".class") == 0) {
-                    string = string.substring(0, string.length() - 6);
-                    string = string.replaceAll("/", ".");
-
-                    Class clazz = Class.forName(string, true, loader);
-                    Annotation[] clazzAnnotations = clazz.getAnnotations();
-                    for (int k = 0; k < clazzAnnotations.length; k++) {
-                        if (clazzAnnotations[k].toString().contains("YVOXPlugin")) {
-                            Files.copy(fileUrl.openStream(),
-                                    Paths.get(System.getProperty("user.dir"), "Plugins/" + jar.getName()));
-                            getPlugins();
-                            flag = true;
-                            break outofloop;
-                        }
-                    }
-                }
-            }
-            jarFile.close();
-            loader.close();
-            if (flag == false) {
-                throw new PluginException("This file isn't a valid plugin !");
-            }else{
-                info_Plugin.setText("The plugin has been added !");
-                info_Plugin.setVisible(true);
-                if (label_noPlugins.isVisible()){
-                    label_noPlugins.setVisible(false);
-                    sc_plugins.setVisible(true);
-                }
-            }
-        } catch (PluginException ex) {
-            info_Plugin.setText(ex.getMessage());
-            info_Plugin.setVisible(true);
+            uncompressZipFile(fileChooser.showOpenDialog(main_window), new File("temp"));
+            copyTempInPlugins();
+            getPlugins();
         } catch (FileAlreadyExistsException faex){
             info_Plugin.setText("This plugin is already installed !");
             info_Plugin.setVisible(true);
@@ -182,6 +143,118 @@ public class Plugins_Controller {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }
+    }
+
+    boolean checkValidPlugin(File file) throws IOException, ClassNotFoundException, FileAlreadyExistsException, PluginException{
+        File jar = file;
+        URL fileUrl = jar.toURI().toURL();
+        URLClassLoader loader = new URLClassLoader(new URL[]{fileUrl});
+        JarFile jarFile = new JarFile(jar);
+        Enumeration enumeration = jarFile.entries();
+        boolean flag = false;
+
+        outofloop:
+        while (enumeration.hasMoreElements()) {
+            String string = enumeration.nextElement().toString();
+
+            if (string.length() > 5 && string.substring(string.length() - 6).compareTo(".class") == 0) {
+                string = string.substring(0, string.length() - 6);
+                string = string.replaceAll("/", ".");
+
+                Class clazz = Class.forName(string, true, loader);
+                Annotation[] clazzAnnotations = clazz.getAnnotations();
+                for (int k = 0; k < clazzAnnotations.length; k++) {
+                    if (clazzAnnotations[k].toString().contains("YVOXPlugin")) {
+                        flag = true;
+                        break outofloop;
+                    }
+                }
+            }
+        }
+        jarFile.close();
+        loader.close();
+
+        return flag;
+    }
+
+    File uncompressZipFile(File zipFile, File contentDest) throws IOException, ClassNotFoundException, FileAlreadyExistsException{
+        ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
+        ZipEntry ze;
+
+        while ((ze = zis.getNextEntry()) != null) {
+            if (ze.isDirectory()){
+                File dir = new File(contentDest.getAbsolutePath() + File.separator + ze.getName());
+                if (!dir.exists()){
+                    dir.mkdir();
+                }
+            }else{
+                File file = new File(contentDest.getAbsolutePath() + File.separator + ze.getName());
+                if (!file.getParentFile().exists()){
+                    file.getParentFile().mkdirs();
+                }
+                FileOutputStream fos = new FileOutputStream(contentDest.getAbsolutePath() + File.separator + ze.getName());
+
+                byte[] buffer = new byte[1024];
+                int read;
+
+                while ((read = zis.read(buffer)) > -1){
+                    fos.write(buffer, 0, read);
+                }
+                fos.flush();
+                fos.close();
+            }
+        }
+        zis.closeEntry();
+        zis.close();
+
+        return contentDest;
+    }
+
+    void copyTempInPlugins() throws IOException {
+        DirectoryStream<Path> dirStr = Files.newDirectoryStream(Paths.get(System.getProperty("user.dir") + "/temp"));
+        Iterator<Path> itrDir = dirStr.iterator();
+
+        ArrayList<Path> pathList = new ArrayList<>();
+        try {
+            String jarName = "";
+            while (itrDir.hasNext()) {
+                Path itrPath = itrDir.next();
+                if (itrPath.toString().substring(itrPath.toString().length()-4, itrPath.toString().length()).compareTo(".jar") == 0){
+                    if (!checkValidPlugin(itrPath.toFile())){
+                        throw new PluginException("This file isn't a valid plugin !");
+                    }
+                    jarName = itrPath.toString().split("\\\\")[itrPath.toString().split("\\\\").length-1];
+                    jarName = jarName.substring(0, jarName.length()-4);
+                }
+                pathList.add(itrPath);
+            }
+
+            File jarfile = new File(System.getProperty("user.dir") + "/Plugins/" + jarName);
+            jarfile.mkdir();
+            Iterator<Path> itrList = pathList.iterator();
+            while (itrList.hasNext()) {
+                Path pathListItem = itrList.next();
+                URL pathToURL = pathListItem.toUri().toURL();
+                Files.move(pathListItem, Paths.get(System.getProperty("user.dir") + "/Plugins/" + jarName + "/"
+                        +  pathToURL.getFile().toString().split("/")[pathToURL.getFile().toString().split("/").length-1]), StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            info_Plugin.setText("The plugin has been added !");
+            info_Plugin.setVisible(true);
+            if (label_noPlugins.isVisible()){
+                label_noPlugins.setVisible(false);
+                sc_plugins.setVisible(true);
+            }
+        } catch (PluginException ex) {
+            info_Plugin.setText(ex.getMessage());
+            info_Plugin.setVisible(true);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        } finally {
+            Files.delete(Paths.get(System.getProperty("user.dir") + "/temp"));
         }
     }
 }

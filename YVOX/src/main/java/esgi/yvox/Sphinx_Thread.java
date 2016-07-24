@@ -37,22 +37,24 @@ public class Sphinx_Thread extends Task{
     void initialization() {
         System.out.println("thread Initiazation");
         PluginsLoader pluginsLoader = new PluginsLoader();
-        filelist = getFiles();
+        String jarName = "";
         try {
             LanguagePlugins[] allLanguagePlugins = pluginsLoader.loadAllLanguagePlugins();
             for (int i = 0; i < allLanguagePlugins.length; i++) {
                 if (allLanguagePlugins[i].getName().compareTo(Main.ChoiceBoxValue) == 0){
                     usedLanguage = allLanguagePlugins[i];
+                    jarName = pluginsLoader.getPluginNameJar().get(usedLanguage.getName()).toString();
                     break;
                 }
             }
         }catch (Exception ex){
             ex.printStackTrace();
         }
+        filelist = getFiles(jarName);
         mConfiguration = new Configuration();
         for (String s:filelist ) {
             String[] path = s.split("\\\\");
-            s = path[path.length-2] +"\\\\"+ path[path.length-1];
+            s = path[path.length-3] +"\\\\"+ path[path.length-2] +"\\\\"+ path[path.length-1];
             if(path[path.length-1].equals(usedLanguage.getAcousticModelPath())){
                 mConfiguration.setAcousticModelPath(s);
             }
@@ -122,15 +124,15 @@ public class Sphinx_Thread extends Task{
         return keyword_map;
     }
 
-    public ArrayList<String> getFiles(){
+    public ArrayList<String> getFiles(String jarName){
         ArrayList<String> files = new ArrayList<>();
-        Path pathDir = Paths.get(System.getProperty("user.dir") + "/Plugins/");
+        Path pathDir = Paths.get(System.getProperty("user.dir") + "/Plugins/" + jarName.substring(0, jarName.length()-4) + "/");
         try{
             DirectoryStream<Path> dirStr = Files.newDirectoryStream(pathDir);
             Iterator<Path> itrDir = dirStr.iterator();
             while (itrDir.hasNext()){
                 Path pathFile = itrDir.next();
-                if (pathFile.toString().substring(pathFile.toString().length()-4).compareTo(".jar") != 0){
+                if (pathFile.toString().substring(pathFile.toString().length() - 4).compareTo(".jar") != 0) {
                     files.add(pathFile.toString());
                 }
             }

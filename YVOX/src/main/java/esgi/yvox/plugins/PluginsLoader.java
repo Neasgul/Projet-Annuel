@@ -65,8 +65,16 @@ public class PluginsLoader {
             Iterator<Path> itrDir = dirStr.iterator();
             while (itrDir.hasNext()){
                 Path pathFile = itrDir.next();
-                if (pathFile.toString().substring(pathFile.toString().length()-4).compareTo(".jar") == 0){
-                    this.files.add(pathFile.toString());
+                if (pathFile.toFile().isDirectory()){
+                    DirectoryStream<Path> subDirStr = Files.newDirectoryStream(pathFile);
+                    Iterator<Path> itrSubDir = subDirStr.iterator();
+                    while (itrSubDir.hasNext()) {
+                        Path pathSubFile = itrSubDir.next();
+                        if (pathSubFile.toString().substring(pathSubFile.toString().length() - 4).compareTo(".jar") == 0) {
+                            this.files.add(pathSubFile.toString());
+                        }
+                    }
+                    subDirStr.close();
                 }
             }
             dirStr.close();
