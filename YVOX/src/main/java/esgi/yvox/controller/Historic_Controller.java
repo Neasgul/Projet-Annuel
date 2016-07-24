@@ -1,5 +1,6 @@
 package esgi.yvox.controller;
 
+import esgi.yvox.Config;
 import esgi.yvox.User_UUID;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,6 +33,9 @@ public class Historic_Controller {
     private Button button_home;
 
     @FXML
+    private Button plugins_button;
+
+    @FXML
     private GridPane gp_Historic;
 
     @FXML
@@ -57,6 +61,22 @@ public class Historic_Controller {
     }
 
     @FXML
+    void onPluginsClick(ActionEvent event){
+        System.out.println("Open Plugins window");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/plugins_scene.fxml"));
+            Parent home_window = loader.load();
+
+            Stage main_window = (Stage) plugins_button.getScene().getWindow();
+            Scene scene_historic = new Scene(home_window, main_window.getWidth(), main_window.getHeight());
+            main_window.setScene(scene_historic);
+            main_window.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     void initialize() {
         getHistoric();
     }
@@ -64,8 +84,7 @@ public class Historic_Controller {
     void getHistoric() {
         HttpURLConnection historic_connection = null;
         try {
-            URL historic_url = new URL("http://localhost:8888/CommandLog/" + 42);
-            //URL historic_url = new URL("http://localhost:8888/CommandLog/" + User_UUID.getUuid());
+            URL historic_url = new URL(Config.getServer_Address() + "CommandLog/" + User_UUID.getUuid());
             historic_connection = (HttpURLConnection ) historic_url.openConnection();
             historic_connection.setRequestMethod("GET");
 
@@ -78,7 +97,7 @@ public class Historic_Controller {
             buffer.close();
             JSONParser jsonParser = new JSONParser();
             JSONArray jsonArray = (JSONArray) jsonParser.parse(res);
-            if (res == "") {
+            if (res.compareTo("[]") == 0) {
                 lbl_noHistoric.setVisible(true);
                 gp_Historic.setVisible(false);
                 ScrollPaneHistoric.setVisible(false);

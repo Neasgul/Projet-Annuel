@@ -7,11 +7,26 @@
 <body>
     <% include partials/Menu %>
     <img src="logo.png" alt="yvox" />
-    <div>
+    <div >
         <h2>Plugins list</h2>
-        <p>
-            There are no plugins available now.
-        </p>
+        <%
+        console.log(pluginslist.length)
+        if(pluginslist.length>0){%>
+            <div><%
+            pluginslist.forEach(function(entry){%>
+
+                    <!-- --><li><a href="/download/<%=entry%>"><%=entry%></a></li><!-- -->
+
+        <%})%></div><%
+        }else{
+            %>
+            <p>
+                There are no plugins available now.
+            </p>
+            <%
+        }
+        %>
+
     </div>
 </body>
 <footer>

@@ -32,14 +32,28 @@ app.get('/about',function (req, res) {
 })
 
 app.get('/plugins',function (req, res) {
-    res.render('plugins');
+    var path = __dirname+"/Plugins"
+    fs.readdir(path, function (err, items) {
+        if(items){
+            console.log(items);
+            res.render('plugins',{pluginslist:items})
+        }else {
+            console.log(items);
+            res.render('plugins',{pluginslist:null});
+        }
+    })
+
 })
-app.get('/download',function (req, res) {
-var file = __dirname + '/Command.log';
+app.get('/download/',function (req, res) {
+var file = __dirname + '/YVOX/YVOX.jar';
   res.download(file); // Set disposition and send it.
 
 })
+app.get('/download/:plugin',function (req, res) {
+var file = __dirname + '/Plugins/'+req.params.plugin;
+  res.download(file); // Set disposition and send it.
 
+})
 
 
 // catch 404 and forward to error handler

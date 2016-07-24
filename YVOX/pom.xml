@@ -6,8 +6,9 @@
 
     <groupId>esgi.yvox</groupId>
     <artifactId>YVOX</artifactId>
-    <version>0.2</version>
+    <version>1.0</version>
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -23,6 +24,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
+                    <outputDirectory>${basedir}</outputDirectory>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
@@ -57,11 +59,6 @@
             <version>5prealpha-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>edu.cmu.sphinx</groupId>
-            <artifactId>sphinx4-data</artifactId>
-            <version>5prealpha-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>1.9.5</version>
@@ -74,5 +71,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>Plugins_interface</groupId>
+            <artifactId>yvox.sdk</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../Plugins_Interface.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>
