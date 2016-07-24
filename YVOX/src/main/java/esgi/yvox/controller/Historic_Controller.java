@@ -1,5 +1,6 @@
 package esgi.yvox.controller;
 
+import esgi.yvox.Config;
 import esgi.yvox.User_UUID;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -83,8 +84,7 @@ public class Historic_Controller {
     void getHistoric() {
         HttpURLConnection historic_connection = null;
         try {
-            URL historic_url = new URL("http://localhost:8888/CommandLog/" + 42);
-            //URL historic_url = new URL("http://localhost:8888/CommandLog/" + User_UUID.getUuid());
+            URL historic_url = new URL(Config.getServer_Address() + "CommandLog/" + User_UUID.getUuid());
             historic_connection = (HttpURLConnection ) historic_url.openConnection();
             historic_connection.setRequestMethod("GET");
 

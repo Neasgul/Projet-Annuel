@@ -48,7 +48,7 @@ public class UUID_Processor {
         HttpURLConnection uuid_connection = null;
         try{
             // Request send
-            URL uuid_url = new URL(Config.getServer_Address());
+            URL uuid_url = new URL(Config.getServer_Address() + "user/add");
             uuid_connection = (HttpURLConnection) uuid_url.openConnection();
             uuid_connection.setRequestMethod("POST");
 
