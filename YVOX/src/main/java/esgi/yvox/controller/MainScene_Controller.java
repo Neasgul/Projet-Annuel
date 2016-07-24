@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -113,6 +114,21 @@ public class MainScene_Controller{
                 if (Main.ChoiceBoxValue != null) {
                     sphinx_request.onRecognitionRequest();
                     result.textProperty().bind(Sphinx_Controller.getInstance().getTask().messageProperty());
+                    result.textProperty().addListener(new ChangeListener<String>() {
+                        @Override
+                        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                            switch (newValue){
+                                case "Recognition started":
+                                    mic.setImage(new Image(getClass().getResourceAsStream("/img/mic_on.png")));
+                                    break;
+                                case "Recognition stopped":
+                                    mic.setImage(new Image(getClass().getResourceAsStream("/img/mic.png")));
+                                    break;
+                                default:
+
+                            }
+                        }
+                    });
                 }else {
                     Stage secondaryStage = new Stage();
                     BorderPane root = new BorderPane();

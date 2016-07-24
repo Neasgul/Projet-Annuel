@@ -90,7 +90,7 @@ public class Sphinx_Thread extends Task{
             initialization();
         }
         lmRecognizer.startRecognition(true);
-
+        updateMessage("Recognition started");
         while (!parent.AskToStop)
         {
             String result = lmRecognizer.getResult().getHypothesis();
@@ -112,6 +112,7 @@ public class Sphinx_Thread extends Task{
         lmRecognizer.stopRecognition();
         sphinx_callback.onStop();
         System.out.println("Recognition finished correctly");
+        updateMessage("Recognition stopped");
         return true;
     }
 
