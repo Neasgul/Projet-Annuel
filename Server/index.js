@@ -45,7 +45,8 @@ app.get('/plugins',function (req, res) {
 
 })
 app.get('/download/',function (req, res) {
-var file = __dirname + '/YVOX/YVOX.jar';
+    console.log(__dirname);
+var file = 'YVOX/YVOX.jar';
   res.download(file); // Set disposition and send it.
 
 })
