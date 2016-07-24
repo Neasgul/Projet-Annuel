@@ -24,9 +24,9 @@ import java.util.Iterator;
 public class Sphinx_Thread extends Task{
     private SphinxEvent sphinx_callback;
     private Command_Manager command_manager;
-    private static Configuration mConfiguration;
-    private static LiveSpeechRecognizer lmRecognizer;
-    private static Sphinx_Controller parent;
+    private Configuration mConfiguration;
+    private MaxLiveSpeechRecognizer lmRecognizer;
+    private Sphinx_Controller parent;
     private LanguagePlugins usedLanguage;
     private ArrayList<String> filelist;
 
@@ -73,7 +73,7 @@ public class Sphinx_Thread extends Task{
         command_manager = new Command_Manager(generateKeyWordMap());
 
         try {
-            lmRecognizer = new LiveSpeechRecognizer(mConfiguration);
+            lmRecognizer = new MaxLiveSpeechRecognizer(mConfiguration);
         } catch (IOException e) {
             e.printStackTrace();
         }
