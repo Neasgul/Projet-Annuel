@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.lang.annotation.Annotation;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.*;
@@ -82,9 +83,6 @@ public class Plugins_Controller {
             uncompressZipFile(fileChooser.showOpenDialog(main_window), new File("temp"));
             copyTempInPlugins();
             getPlugins();
-        } catch (FileAlreadyExistsException faex){
-            info_Plugin.setText("This plugin is already installed !");
-            info_Plugin.setVisible(true);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -117,8 +115,9 @@ public class Plugins_Controller {
                 final int finalI = i;
                 plugin_delete.setOnAction((event -> {
                     try {
-                        HashMap jars = plugLoader.getPluginNameJar();
-                        Path jarPath = Paths.get(System.getProperty("user.dir") + "/Plugins/" + jars.get(allPlugins.get(finalI).getName()));
+                        String jarNameFile = plugLoader.getPluginNameJar().get(allPlugins.get(finalI).getName()).toString();
+                        Path jarPath = Paths.get(System.getProperty("user.dir") + "/Plugins/" + jarNameFile.substring(0, jarNameFile.length()-4));
+                        deleteAllFile(jarPath);
                         Files.delete(jarPath);
                         info_Plugin.setText("The plugin has been deleted !");
                         info_Plugin.setVisible(true);
@@ -146,7 +145,22 @@ public class Plugins_Controller {
         }
     }
 
-    boolean checkValidPlugin(File file) throws IOException, ClassNotFoundException, FileAlreadyExistsException, PluginException{
+    void deleteAllFile(Path path) throws IOException {
+        DirectoryStream<Path> dirStr = Files.newDirectoryStream(path);
+        Iterator<Path> itrDir = dirStr.iterator();
+        while (itrDir.hasNext()){
+            Path pathFile = itrDir.next();
+            if (pathFile.toFile().isDirectory()){
+                deleteAllFile(pathFile);
+                Files.delete(pathFile);
+            }else {
+                Files.delete(pathFile);
+            }
+        }
+        dirStr.close();
+    }
+
+    boolean checkValidPlugin(File file) throws ClassNotFoundException, IOException, PluginException {
         File jar = file;
         URL fileUrl = jar.toURI().toURL();
         URLClassLoader loader = new URLClassLoader(new URL[]{fileUrl});
@@ -251,9 +265,14 @@ public class Plugins_Controller {
             info_Plugin.setVisible(true);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (FileAlreadyExistsException|DirectoryNotEmptyException faex){
+            info_Plugin.setText("This plugin is already installed !");
+            info_Plugin.setVisible(true);
+            deleteAllFile(Paths.get(System.getProperty("user.dir") + "/temp"));
         } catch (Exception ex){
             ex.printStackTrace();
         } finally {
+            dirStr.close();
             Files.delete(Paths.get(System.getProperty("user.dir") + "/temp"));
         }
     }
