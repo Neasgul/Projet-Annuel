@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -93,15 +94,16 @@ public class Sphinx_Thread extends Task{
         while (!parent.AskToStop)
         {
             String result = lmRecognizer.getResult().getHypothesis();
-            //sphinx_callback.onResult(result);
             updateMessage(result);
             System.out.println(result);
             if (command_manager.isCommandStop(result))
             {
                 break;
             }else {
+
                 Command current = command_manager.determindeCommand(result);
                 if(current!=null) {
+                    command_manager.sendCommand(current);
                     command_manager.executeCommand(current);
                 }
             }

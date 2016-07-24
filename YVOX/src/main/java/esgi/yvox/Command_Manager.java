@@ -4,12 +4,13 @@ package esgi.yvox;
  * Created by Benoit on 01/07/2016.
  */
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.awt.*;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.List;
 
 /**
  * Indexing :
@@ -61,16 +62,20 @@ public class Command_Manager {
     }
 
     public boolean executeCommand(Command command){
+        String filename = command.getCommandWordList().get(command.getKeyWordPosition()+1);
+        File file = new File(filename);
         switch (command.getType()){
             case 1:
+                try {
+                    Desktop.getDesktop().open(file);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case 2:
                 try {
-                    String filename = command.getCommandWordList().get(command.getKeyWordPosition()+1)+".txt";
-                    File newfile = new File(filename);
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(newfile));
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                     writer.write("nouveau Fichier");
-
                     writer.close();
                 }
                 catch (IOException e)
@@ -79,9 +84,62 @@ public class Command_Manager {
                 }
                 break;
             case 3:
+                file.delete();
                 break;
             default:
         }
+
         return true;
+    }
+
+    public boolean sendCommand(Command command) {
+        HttpURLConnection uuid_connection = null;
+        try{
+            // Request send
+            URL url = new URL(Config.getServer_Address()+"command");
+            uuid_connection = (HttpURLConnection) url.openConnection();
+            uuid_connection.setRequestMethod("POST");
+
+            // Parameters to send
+            String url_params = new String();
+            StringBuilder message = new StringBuilder();
+            for(String s: command.getCommandWordList()){
+                message.append(s+" ");
+            }
+            System.out.println(User_UUID.getUuid());
+            switch (command.getType()){
+                case 1:
+                    url_params = "uuid="+User_UUID.getUuid()+"&level=Execute&message="+message;
+                    break;
+                case 2:
+                    url_params = "uuid="+User_UUID.getUuid()+"&level=Create&message="+message;
+                    break;
+                case 3:
+                    url_params = "uuid="+User_UUID.getUuid()+"&level=Delete&message="+message;
+                    break;
+                default:
+            }
+            uuid_connection.setDoInput(true);
+            uuid_connection.setDoOutput(true);
+            DataOutputStream dos = new DataOutputStream(uuid_connection.getOutputStream());
+            dos.writeBytes(url_params);
+            dos.flush();
+            dos.close();
+
+            System.out.println("Request send");
+
+            // Respond
+            BufferedReader buffRead = new BufferedReader(new InputStreamReader(uuid_connection.getInputStream()));
+            String str_res = "";
+            StringBuffer res = new StringBuffer();
+            while ((str_res = buffRead.readLine()) != null){
+                res.append(str_res);
+            }
+            buffRead.close();
+            return true;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
     }
 }
