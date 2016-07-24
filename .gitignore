@@ -2,7 +2,7 @@
 build
 out
 target
-Plugins
+YVOX/Plugins
 token.txt
 node_modules
 .DS_Store
