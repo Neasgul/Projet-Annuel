@@ -6,8 +6,9 @@
 
     <groupId>esgi.yvox</groupId>
     <artifactId>YVOX</artifactId>
-    <version>0.5</version>
+    <version>1.0</version>
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
