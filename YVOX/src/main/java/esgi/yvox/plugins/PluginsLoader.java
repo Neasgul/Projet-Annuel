@@ -60,6 +60,9 @@ public class PluginsLoader {
     public ArrayList<String> getFiles(){
         files = new ArrayList<>();
         Path pathDir = Paths.get(System.getProperty("user.dir") + "/Plugins/");
+        if (!pathDir.toFile().exists()){
+            pathDir.toFile().mkdir();
+        }
         try{
             DirectoryStream<Path> dirStr = Files.newDirectoryStream(pathDir);
             Iterator<Path> itrDir = dirStr.iterator();
