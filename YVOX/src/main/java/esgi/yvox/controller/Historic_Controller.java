@@ -97,7 +97,7 @@ public class Historic_Controller {
             buffer.close();
             JSONParser jsonParser = new JSONParser();
             JSONArray jsonArray = (JSONArray) jsonParser.parse(res);
-            if (res == "") {
+            if (res.compareTo("[]") == 0) {
                 lbl_noHistoric.setVisible(true);
                 gp_Historic.setVisible(false);
                 ScrollPaneHistoric.setVisible(false);
